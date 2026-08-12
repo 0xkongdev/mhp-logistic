@@ -101,7 +101,7 @@ const articles = [
 
 function Logo({ footer = false }: { footer?: boolean }) {
   return (
-    <a className={`brand ${footer ? 'brand--footer' : ''}`} href="#top" aria-label="MHP Logistic">
+    <a className={`brand ${footer ? 'brand--footer' : ''}`} href="/" aria-label="MHP Logistic">
       <img src="/assets/logo.png" alt="MHP Logistic" />
       <span className="brand-divider" />
       <span className="brand-copy">
@@ -109,6 +109,48 @@ function Logo({ footer = false }: { footer?: boolean }) {
         <small>Nhanh chóng - Đảm bảo chất lượng</small>
       </span>
     </a>
+  )
+}
+
+const servicePageItems = [
+  {
+    image: '/assets/service-page-road.png',
+    alt: 'Xe tải container vận chuyển hàng hóa đường bộ',
+  },
+  {
+    image: '/assets/service-page-sea.png',
+    alt: 'Tàu container vận chuyển hàng hóa đường biển',
+  },
+  {
+    image: '/assets/service-page-air.png',
+    alt: 'Máy bay vận chuyển hàng hóa quốc tế',
+  },
+]
+
+function ServicePage() {
+  return (
+    <main className="service-page">
+      <div className="service-page-inner">
+        <div className="service-page-heading">
+          <p>Giải pháp toàn diện</p>
+          <h1>DỊCH VỤ CỦA <span>CHÚNG TÔI</span></h1>
+          <small>Giải pháp Logistic toàn diện cho doanh nghiệp xuất nhập khẩu</small>
+        </div>
+
+        <div className="service-page-list">
+          {servicePageItems.map((item) => (
+            <article className="service-page-item" key={item.image}>
+              <img src={item.image} alt={item.alt} />
+              <div>
+                <h2>Vận chuyển chính ngạch</h2>
+                <p>Quy trình vận chuyển từ Trung Quốc về Việt Nam, chuyên nghiệp, minh bạch và an toàn</p>
+                <a href="#contact">Xem chi tiết <ArrowRight /></a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </main>
   )
 }
 
@@ -126,6 +168,7 @@ function SectionIntro({ eyebrow, title, text }: { eyebrow: string; title: string
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const isServicePage = window.location.pathname.replace(/\/$/, '') === '/dich-vu'
 
   return (
     <div className="site" id="top">
@@ -143,10 +186,10 @@ function App() {
           <div className="shell navbar">
             <Logo />
             <nav className={menuOpen ? 'open' : ''}>
-              <a href="#about" onClick={() => setMenuOpen(false)}><Building2 /> Giới thiệu</a>
-              <a href="#services" onClick={() => setMenuOpen(false)}><Box /> Dịch vụ</a>
-              <a href="#news" onClick={() => setMenuOpen(false)}><Newspaper /> Tin tức</a>
-              <a href="#rates" onClick={() => setMenuOpen(false)}><ClipboardCheck /> Bảng giá</a>
+              <a href="/#about" onClick={() => setMenuOpen(false)}><Building2 /> Giới thiệu</a>
+              <a href="/dich-vu" aria-current={isServicePage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><Box /> Dịch vụ</a>
+              <a href="/#news" onClick={() => setMenuOpen(false)}><Newspaper /> Tin tức</a>
+              <a href="/#rates" onClick={() => setMenuOpen(false)}><ClipboardCheck /> Bảng giá</a>
             </nav>
             <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Mở menu">
               {menuOpen ? <X /> : <Menu />}
@@ -155,7 +198,7 @@ function App() {
         </div>
       </header>
 
-      <main>
+      {isServicePage ? <ServicePage /> : <main>
         <section className="hero">
           <div className="shell hero-content">
             <div className="hero-copy">
@@ -310,12 +353,12 @@ function App() {
             </div>
           </div>
         </section>
-      </main>
+      </main>}
 
       <footer>
         <div className="shell footer-main">
           <div><Logo footer /><p>Kết nối thế giới thông qua giải pháp vận tải thông minh, nhanh chóng và tin cậy</p></div>
-          <div><h3>THÔNG TIN &amp; CHÍNH SÁCH</h3><a href="#">Chính sách bảo mật</a><a href="#">Điều khoản sử dụng</a><a href="#rates">Biểu phí dịch vụ</a><a href="#">Hướng dẫn đặt hàng</a></div>
+          <div><h3>THÔNG TIN &amp; CHÍNH SÁCH</h3><a href="#">Chính sách bảo mật</a><a href="#">Điều khoản sử dụng</a><a href="/#rates">Biểu phí dịch vụ</a><a href="#">Hướng dẫn đặt hàng</a></div>
           <div><h3>LIÊN HỆ HỖ TRỢ</h3><p><MapPin />Tầng 3, tòa PCC1, số 44 Triều Khúc, Phường Thanh Liệt, Hanoi, Vietnam, 100000</p><a href="tel:0898586622"><Headphones />0898 586 622</a><a href="mailto:support@erktransport.com"><Mail />support@erktransport.com</a></div>
         </div>
         <div className="shell footer-bottom"><span>© 2026 MHP Logistics. All rights reserved.</span><div><a href="#">Chính sách bảo mật</a><a href="#">Điều khoản sử dụng</a></div></div>
