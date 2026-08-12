@@ -1,218 +1,324 @@
 import {
   ArrowRight,
-  CheckCircle2,
+  Box,
+  Building2,
+  ChevronDown,
+  ClipboardCheck,
+  Globe2,
   Headphones,
-  PackageCheck,
-  Route,
-  ShieldCheck,
+  Mail,
+  MapPin,
+  Menu,
+  Newspaper,
+  Package,
+  Plane,
+  ShoppingBag,
   Truck,
+  WalletCards,
+  Warehouse,
+  X,
 } from 'lucide-react'
+import { useState } from 'react'
 
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
+import './App.css'
+
+const marketplaces = [
+  ['Taobao', '/assets/taobao.png'],
+  ['Xianyu', '/assets/xianyu.png'],
+  ['Alibaba', '/assets/alibaba.png'],
+  ['Tmall', '/assets/tmall.png'],
+  ['1688', '/assets/1688.png'],
+  ['Pinduoduo', '/assets/pinduoduo.png'],
+]
+
+const stats = [
+  ['20K+', 'Các lô hàng được giao trên khắp mạng lưới vận tải khu vực và quốc tế.'],
+  ['98%', 'Các đơn hàng được giao đúng hẹn thông qua hoạt động logistics đáng tin cậy.'],
+  ['120+', 'Đối tác toàn cầu hỗ trợ vận chuyển hàng hóa và lưu thông hàng hóa.'],
+  ['24/7', 'Theo dõi lô hàng và hỗ trợ logistics luôn sẵn sàng mọi lúc.'],
+]
+
+const steps = [
+  ['Bước 1', 'Đặt hàng', ShoppingBag],
+  ['Bước 2', 'Đóng gói hàng hóa', Package],
+  ['Bước 3', 'Vận chuyển nội địa', Truck],
+  ['Bước 4', 'Kho Trung Quốc', Warehouse],
+  ['Bước 5', 'Vận chuyển nội địa', Plane],
+  ['Bước 7', 'Kho Việt Nam', Warehouse],
+  ['Bước 8', 'Thông quan', ClipboardCheck],
+  ['Bước 5', 'Vận chuyển Việt Nam', Truck],
+] as const
+
+const rates = [
+  ['Hàng giá siêu ngạch', Box],
+  ['Hàng giá chi phí', WalletCards],
+  ['Hàng giá hàng nặng', WalletCards],
+  ['Hàng giá hàng siêu nặng', Box],
+] as const
 
 const services = [
   {
-    icon: Route,
-    title: 'Vận tải tối ưu',
-    description:
-      'Tối ưu tuyến đường và lịch giao nhận để hàng hóa đến đúng nơi, đúng thời điểm.',
+    title: 'Vận Tải Đường Bộ',
+    image: '/assets/service-road.png',
+    text: 'Giải pháp vận tải đường bộ đáng tin cậy, đảm bảo giao hàng an toàn, đúng hẹn và linh hoạt.',
   },
   {
-    icon: PackageCheck,
-    title: 'Theo dõi minh bạch',
-    description:
-      'Cập nhật trạng thái đơn hàng xuyên suốt, giúp bạn chủ động trong mọi kế hoạch.',
+    title: 'Vận Tải Đường Biển',
+    image: '/assets/service-warehouse.png',
+    text: 'Giải pháp vận tải đường biển đáng tin cậy, đảm bảo vận chuyển hàng hóa toàn cầu an toàn.',
   },
   {
-    icon: ShieldCheck,
-    title: 'An toàn hàng hóa',
-    description:
-      'Quy trình kiểm soát chặt chẽ từ lúc tiếp nhận đến khi bàn giao thành công.',
+    title: 'Vận Tải Hàng Không',
+    image: '/assets/service-sea.png',
+    text: 'Dịch vụ vận tải hàng không nhanh chóng cho các lô hàng nhạy cảm về thời gian và giá trị cao.',
   },
 ]
 
-function App() {
+const reasons = [
+  ['01', 'Dịch vụ tận tâm', 'Đội ngũ chuyên gia giàu kinh nghiệm sẵn sàng hỗ trợ bạn 24/7.'],
+  ['02', 'Giá cả cạnh tranh', 'Cam kết mang lại giải pháp vận chuyển với chi phí tối ưu nhất thị trường.'],
+  ['03', 'An toàn tuyệt đối', 'Hệ thống kho bãi hiện đại, quy trình kiểm soát hàng hóa nghiêm ngặt.'],
+  ['04', 'Công nghệ hiện đại', 'Theo dõi đơn hàng thời gian thực qua ứng dụng và website.'],
+]
+
+const articles = [
+  {
+    image: '/assets/news-1.png',
+    title: 'Những đơn vị giao hàng hỏa uy tín và bảng giá giao hàng',
+    text: 'Các cách hiệu quả để đăng tin tuyển dụng trong năm',
+  },
+  {
+    image: '/assets/news-2.png',
+    title: 'Vận chuyển hiệu quả từ 1-3 ngày và bảng giá vận chuyển',
+    text: 'Các cách hiệu quả để đăng tin tuyển dụng trong năm',
+  },
+  {
+    image: '/assets/news-hero.png',
+    title: 'Cách order hàng từ Trung Quốc qua các kênh vận chuyển',
+    text: 'Các cách hiệu quả để đăng tin tuyển dụng trong năm',
+  },
+]
+
+function Logo({ footer = false }: { footer?: boolean }) {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <header className="sticky top-0 z-50 border-b bg-background/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-8">
-          <a className="flex items-center gap-2.5 font-semibold tracking-tight" href="#">
-            <span className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground">
-              <Truck className="size-5" />
-            </span>
-            <span>MHP Logistic</span>
-          </a>
-          <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
-            <a className="transition-colors hover:text-foreground" href="#dich-vu">
-              Dịch vụ
-            </a>
-            <a className="transition-colors hover:text-foreground" href="#loi-ich">
-              Lợi ích
-            </a>
-            <a className="transition-colors hover:text-foreground" href="#lien-he">
-              Liên hệ
-            </a>
-          </nav>
-          <Button asChild>
-            <a href="#lien-he">Nhận báo giá</a>
-          </Button>
+    <a className={`brand ${footer ? 'brand--footer' : ''}`} href="#top" aria-label="MHP Logistic">
+      <img src="/assets/logo.png" alt="MHP Logistic" />
+      <span className="brand-divider" />
+      <span className="brand-copy">
+        <strong>MHP LOGISTIC</strong>
+        <small>Nhanh chóng - Đảm bảo chất lượng</small>
+      </span>
+    </a>
+  )
+}
+
+function SectionIntro({ eyebrow, title, text }: { eyebrow: string; title: string; text: string }) {
+  return (
+    <div className="section-intro">
+      <div>
+        <p className="eyebrow"><span />{eyebrow}</p>
+        <h2>{title}</h2>
+      </div>
+      <p>{text}</p>
+    </div>
+  )
+}
+
+function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  return (
+    <div className="site" id="top">
+      <header>
+        <div className="topbar">
+          <div className="shell topbar-inner">
+            <span className="exchange">¥ TỶ GIÁ: 4,000 VNĐ</span>
+            <div className="topbar-info">
+              <a href="tel:0866091688"><Headphones /> Số điện thoại: 086.609.1688</a>
+              <span><Globe2 /> Ngôn ngữ: <img src="/assets/vietnam.png" alt="" /> VIE <ChevronDown /></span>
+            </div>
+          </div>
+        </div>
+        <div className="nav-wrap">
+          <div className="shell navbar">
+            <Logo />
+            <nav className={menuOpen ? 'open' : ''}>
+              <a href="#about" onClick={() => setMenuOpen(false)}><Building2 /> Giới thiệu</a>
+              <a href="#services" onClick={() => setMenuOpen(false)}><Box /> Dịch vụ</a>
+              <a href="#news" onClick={() => setMenuOpen(false)}><Newspaper /> Tin tức</a>
+              <a href="#rates" onClick={() => setMenuOpen(false)}><ClipboardCheck /> Bảng giá</a>
+            </nav>
+            <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Mở menu">
+              {menuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
         </div>
       </header>
 
       <main>
-        <section className="relative isolate">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_85%_20%,oklch(0.92_0.08_230),transparent_35%),radial-gradient(circle_at_10%_80%,oklch(0.95_0.06_70),transparent_30%)]" />
-          <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-20 lg:grid-cols-[1.05fr_.95fr] lg:px-8 lg:py-28">
+        <section className="hero">
+          <div className="shell hero-content">
+            <div className="hero-copy">
+              <p className="hero-kicker">MHP LOGISTIC</p>
+              <h1>Vận chuyển nhanh chóng,<br />thông minh hơn</h1>
+              <p>MHP logistics cung cấp giải pháp vận chuyển quốc tế, khai báo hải quan và kho bãi thông minh. Chúng tôi giúp doanh nghiệp tối ưu hóa chuỗi cung ứng</p>
+            </div>
+            <form className="quote-form" onSubmit={(event) => event.preventDefault()}>
+              <strong>NHẬN TƯ VẤN &amp; BÁO GIÁ NGAY</strong>
+              <div>
+                <input aria-label="Họ và tên" placeholder="Họ và tên" />
+                <input aria-label="Số điện thoại" placeholder="Số điện thoại" inputMode="tel" />
+                <input aria-label="Nhu cầu nhập hàng" placeholder="Nhu cầu nhập hàng" />
+                <button>Đăng ký tư vấn</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section className="marketplaces">
+          <div className="shell">
+            <h2>Order hàng các trang thương mại điện tử</h2>
+            <div className="market-list">
+              {marketplaces.map(([name, image]) => (
+                <div className="market-item" key={name}>
+                  <img src={image} alt={name} />
+                  <span>{name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="about section-pad" id="about">
+          <div className="shell">
+            <SectionIntro
+              eyebrow="Về chúng tôi"
+              title={'Vận chuyển và đặt\nhàng Trung'}
+              text="MHP cung cấp giải pháp vận chuyển quốc tế, khai báo hải quan và kho bãi thông minh. Chúng tôi giúp doanh nghiệp tối ưu hóa chuỗi cung ứng với chi phí thấp nhất và độ an toàn cao nhất."
+            />
+            <div className="about-grid">
+              <img className="about-photo" src="/assets/about-worker.png" alt="Nhân viên kho MHP" />
+              <div className="stats-grid">
+                {stats.map(([value, text]) => (
+                  <article key={value}>
+                    <span className="stat-dot" />
+                    <div><strong>{value}</strong><p>{text}</p></div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="process section-pad">
+          <div className="shell">
+            <h2>Quy trình đặt hàng</h2>
+            <div className="process-map">
+              {steps.map(([step, title, Icon], index) => (
+                <article className={index > 3 ? 'red' : ''} key={`${step}-${title}-${index}`}>
+                  <span><Icon /></span>
+                  <div><small>{step}</small><strong>{title}</strong></div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="rates section-pad" id="rates">
+          <div className="shell">
+            <h2>Bảng giá vận chuyển</h2>
+            <div className="rates-layout">
+              <div className="rate-grid">
+                {rates.map(([title, Icon]) => (
+                  <article key={title as string}>
+                    <Icon />
+                    <strong>{title as string}</strong>
+                    <a href="#contact">Xem chi tiết <ArrowRight /></a>
+                  </article>
+                ))}
+              </div>
+              <img src="/assets/rate-truck.png" alt="Xe tải MHP Logistic" />
+            </div>
+          </div>
+        </section>
+
+        <section className="services section-pad" id="services">
+          <div className="shell">
+            <SectionIntro
+              eyebrow="Dịch vụ"
+              title={'Các dịch vụ của\nchúng tôi'}
+              text="MHP cung cấp giải pháp vận chuyển quốc tế, khai báo hải quan và kho bãi thông minh. Chúng tôi giúp doanh nghiệp tối ưu hóa chuỗi cung ứng với chi phí thấp nhất và độ an toàn cao nhất."
+            />
+            <div className="service-grid">
+              {services.map((service) => (
+                <article key={service.title}>
+                  <img src={service.image} alt="" />
+                  <div><h3>{service.title}</h3><p>{service.text}</p></div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="why section-pad">
+          <div className="shell why-grid">
             <div>
-              <Badge variant="secondary" className="mb-6 rounded-full px-3 py-1">
-                Giao vận tin cậy trên toàn quốc
-              </Badge>
-              <h1 className="max-w-3xl text-5xl font-semibold leading-[1.05] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
-                Kết nối hàng hóa, mở rộng kinh doanh.
-              </h1>
-              <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-                Giải pháp logistics linh hoạt cho doanh nghiệp, từ vận chuyển đến
-                quản lý giao nhận — nhanh chóng, minh bạch và an toàn.
-              </p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <Button size="lg" asChild className="h-11 px-5">
-                  <a href="#lien-he">
-                    Bắt đầu ngay <ArrowRight data-icon="inline-end" />
-                  </a>
-                </Button>
-                <Button size="lg" variant="outline" asChild className="h-11 px-5">
-                  <a href="#dich-vu">Khám phá dịch vụ</a>
-                </Button>
+              <p className="eyebrow"><span />Tại sao chọn chúng tôi</p>
+              <h2>Tại sao chọn MHP là<br />đối tác</h2>
+              <div className="reason-list">
+                {reasons.map(([number, title, text]) => (
+                  <article key={number}>
+                    <span>{number}</span>
+                    <div><strong>{title}</strong><p>{text}</p></div>
+                  </article>
+                ))}
               </div>
             </div>
-
-            <Card className="relative overflow-hidden border-white/70 bg-white/80 shadow-2xl shadow-sky-950/10 backdrop-blur dark:bg-card/80">
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-500 via-blue-600 to-orange-400" />
-              <CardHeader>
-                <CardDescription>Đơn hàng đang vận chuyển</CardDescription>
-                <div className="flex items-center justify-between gap-4">
-                  <CardTitle className="text-2xl">#MHP-240812</CardTitle>
-                  <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">
-                    Đúng tiến độ
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="relative mb-8 mt-3">
-                  <div className="h-2 rounded-full bg-muted">
-                    <div className="h-2 w-[72%] rounded-full bg-primary" />
-                  </div>
-                  <div className="mt-3 flex justify-between text-xs text-muted-foreground">
-                    <span>TP. Hồ Chí Minh</span>
-                    <span>Đà Nẵng</span>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  {[
-                    ['08:30', 'Đã tiếp nhận hàng hóa'],
-                    ['11:45', 'Đang trung chuyển'],
-                    ['Dự kiến 17:30', 'Giao đến người nhận'],
-                  ].map(([time, label], index) => (
-                    <div className="flex items-start gap-3" key={label}>
-                      <CheckCircle2
-                        className={index < 2 ? 'mt-0.5 size-5 text-emerald-600' : 'mt-0.5 size-5 text-muted-foreground/40'}
-                      />
-                      <div>
-                        <p className="text-sm font-medium">{label}</p>
-                        <p className="text-xs text-muted-foreground">{time}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        <section className="border-y bg-muted/30" id="loi-ich">
-          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-5 py-10 text-center md:grid-cols-4 lg:px-8">
-            {[
-              ['24/7', 'Hỗ trợ khách hàng'],
-              ['98%', 'Giao hàng đúng hẹn'],
-              ['63+', 'Tỉnh thành phủ sóng'],
-              ['5.000+', 'Chuyến hàng mỗi tháng'],
-            ].map(([value, label]) => (
-              <div key={label}>
-                <p className="text-2xl font-semibold tracking-tight sm:text-3xl">{value}</p>
-                <p className="mt-1 text-sm text-muted-foreground">{label}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28" id="dich-vu">
-          <div className="max-w-2xl">
-            <Badge variant="outline">Giải pháp của chúng tôi</Badge>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-              Mọi thứ bạn cần cho một hành trình liền mạch
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Một đối tác duy nhất để đơn giản hóa vận hành và nâng cao trải nghiệm khách hàng.
-            </p>
-          </div>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {services.map(({ icon: Icon, title, description }) => (
-              <Card key={title} className="transition-transform duration-300 hover:-translate-y-1">
-                <CardHeader>
-                  <span className="mb-3 grid size-11 place-items-center rounded-xl bg-primary/10 text-primary">
-                    <Icon className="size-5" />
-                  </span>
-                  <CardTitle>{title}</CardTitle>
-                  <CardDescription className="leading-6">{description}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-5 pb-20 lg:px-8 lg:pb-28" id="lien-he">
-          <div className="overflow-hidden rounded-3xl bg-primary px-6 py-12 text-primary-foreground sm:px-12 lg:flex lg:items-center lg:justify-between lg:px-16 lg:py-16">
-            <div className="max-w-2xl">
-              <p className="text-sm font-medium text-primary-foreground/70">Sẵn sàng vận chuyển?</p>
-              <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
-                Cùng MHP đưa hàng hóa của bạn đi xa hơn.
-              </h2>
+            <div className="why-visual">
+              <div><h3>MHP LOGISTIC</h3><p>Vận chuyển hàng Trung nhanh chóng</p></div>
+              <img src="/assets/why-truck.png" alt="Xe tải MHP" />
+              <div className="mini-stats"><span><b>200</b>Đơn vận chuyển</span><span><b>4</b>Đối tác vận chuyển</span></div>
             </div>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:pl-10">
-              <Button size="lg" variant="secondary" asChild className="h-11 px-5">
-                <a href="mailto:hello@mhplogistic.vn">
-                  Nhận tư vấn <ArrowRight data-icon="inline-end" />
-                </a>
-              </Button>
-              <Button size="lg" variant="outline" asChild className="h-11 border-white/20 bg-white/5 px-5 text-white hover:bg-white/10 hover:text-white">
-                <a href="tel:+84000000000">
-                  <Headphones data-icon="inline-start" /> Hotline
-                </a>
-              </Button>
+          </div>
+        </section>
+
+        <section className="cta" id="contact">
+          <div className="shell">
+            <p>MHP Logistic</p>
+            <h2>Order nhanh chóng dễ dàng<br />Ship nhanh</h2>
+            <span>Liên hệ ngay để nhận hỗ trợ mang về nhiều ưu đãi đặc biệt.</span>
+            <a href="tel:0866091688">Liên hệ chúng tôi</a>
+          </div>
+        </section>
+
+        <section className="news section-pad" id="news">
+          <div className="shell">
+            <SectionIntro
+              eyebrow="Tin tức"
+              title="Cẩm nang khách hàng"
+              text="Những kiến thức, kinh nghiệm và hướng dẫn chi tiết giúp bạn tối ưu hóa quá trình nhập hàng và vận chuyển."
+            />
+            <div className="article-grid">
+              {articles.map((article) => (
+                <article key={article.title}>
+                  <img src={article.image} alt="" />
+                  <p><b>Ngày đăng</b><span />24 / 08 / 2025</p>
+                  <h3>{article.title}</h3>
+                  <span>{article.text}</span>
+                </article>
+              ))}
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="border-t">
-        <div className="mx-auto max-w-7xl px-5 py-8 lg:px-8">
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-2 font-medium">
-              <Truck className="size-5" /> MHP Logistic
-            </div>
-            <p className="text-sm text-muted-foreground">© 2026 MHP Logistic. All rights reserved.</p>
-          </div>
-          <Separator className="my-6 sm:hidden" />
+      <footer>
+        <div className="shell footer-main">
+          <div><Logo footer /><p>Kết nối thế giới thông qua giải pháp vận tải thông minh, nhanh chóng và tin cậy</p></div>
+          <div><h3>THÔNG TIN &amp; CHÍNH SÁCH</h3><a href="#">Chính sách bảo mật</a><a href="#">Điều khoản sử dụng</a><a href="#rates">Biểu phí dịch vụ</a><a href="#">Hướng dẫn đặt hàng</a></div>
+          <div><h3>LIÊN HỆ HỖ TRỢ</h3><p><MapPin />Tầng 3, tòa PCC1, số 44 Triều Khúc, Phường Thanh Liệt, Hanoi, Vietnam, 100000</p><a href="tel:0898586622"><Headphones />0898 586 622</a><a href="mailto:support@erktransport.com"><Mail />support@erktransport.com</a></div>
         </div>
+        <div className="shell footer-bottom"><span>© 2026 MHP Logistics. All rights reserved.</span><div><a href="#">Chính sách bảo mật</a><a href="#">Điều khoản sử dụng</a></div></div>
       </footer>
     </div>
   )
