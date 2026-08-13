@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "mhp-logistic",
-  "account_id": "20c05b5b6e1a4b50a2514dc4f93520b9",
+  "account_id": "1a1524f96e02262aa858d9e5094727b8",
   "main": "./worker/index.ts",
   "compatibility_date": "2026-08-11",
   "compatibility_flags": ["nodejs_compat"],
