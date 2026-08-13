@@ -48,11 +48,11 @@ header { position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(4, 2
 .topbar-info .figma-icon { width: 16px; height: 16px; object-fit: contain; }
 .topbar-language-value > .figma-icon { width: 16px; height: 16px; }
 .topbar-info img { width: 21px; height: 14px; object-fit: cover; border-radius: 1px; }
-.nav-wrap { height: 63px; background: white; }
-.navbar { height: 63px; display: flex; align-items: center; justify-content: space-between; }
-.brand { display: flex; align-items: center; height: 47px; color: var(--blue); }
-.brand img { width: 124px; height: 47px; object-fit: contain; }
-.brand-divider { width: 1px; height: 33px; margin: 0 16px; background: #d9dde5; }
+.nav-wrap { height: 84px; background: white; }
+.navbar { height: 84px; display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; height: 80px; color: var(--blue); }
+.brand img { width: 220px; height: 80px; object-fit: contain; }
+.brand-divider { width: 1px; height: 33px; margin: 0 16px 0 -28px; background: #d9dde5; }
 .brand-copy { display: flex; flex-direction: column; line-height: 1.2; }
 .brand-copy strong { font-size: 24px; font-weight: 600; }
 .brand-copy small { font-size: 12px; font-weight: 400; }
@@ -249,8 +249,11 @@ header { position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(4, 2
 .rates-layout > img { position: absolute; z-index: 1; top: 128px; right: -11px; width: 612px; height: 339px; object-fit: cover; }
 
 .price-modal { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 16px; }
-.price-modal__backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, .88); }
-.price-modal__content { position: relative; width: min(972px, 100%); max-height: calc(100vh - 32px); overflow: auto; border-radius: 12px; background: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, .06); color: #1a1a1a; }
+.price-modal__backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, .88); animation: price-modal-backdrop-in .3s ease-out both; }
+.price-modal__content { position: relative; width: min(972px, 100%); max-height: calc(100vh - 32px); overflow: auto; border-radius: 12px; background: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, .06); color: #1a1a1a; animation: price-modal-content-in .42s cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes price-modal-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes price-modal-content-in { from { opacity: 0; transform: translateY(16px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .price-modal__backdrop, .price-modal__content { animation: none; } }
 .price-modal__notice { min-height: 71px; display: flex; align-items: center; justify-content: center; padding: 20px 56px; border-bottom: 1px solid #d1dde2; font-size: 15px; text-align: center; }
 .price-modal__notice button { position: absolute; top: 24px; right: 24px; width: 24px; height: 24px; display: grid; place-items: center; padding: 4px; border: 0; border-radius: 50%; color: #344054; background: #e2e8f1; }
 .price-modal__notice svg { width: 16px; height: 16px; }
@@ -398,7 +401,8 @@ footer { color: white; background: #07336b; }
   .language-switcher button { height: 22px; padding: 0 5px; }
   .topbar-language-code img { margin-left: 3px; }
   .nav-wrap, .navbar { height: 62px; }
-  .brand img { width: 104px; }
+  .brand { height: 52px; }
+  .brand img { width: 104px; height: 52px; }
   .menu-button { display: grid; place-items: center; }
   .navbar nav { position: absolute; z-index: 10; top: 96px; left: 0; right: 0; padding: 18px 24px 24px; display: none; align-items: stretch; flex-direction: column; gap: 0; background: white; box-shadow: 0 15px 25px rgba(4,23,52,.12); }
   .navbar nav.open { display: flex; }

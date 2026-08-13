@@ -585,12 +585,20 @@ function App() {
   const isNewsPage = pathname === '/tin-tuc' || pathname.startsWith('/tin-tuc/')
   const isNewsDetailPage = pathname.startsWith('/tin-tuc/')
   const isPolicyPage = pathname === '/chinh-sach-bao-mat' || pathname === '/dieu-khoan-su-dung'
-  const [priceModalOpen, setPriceModalOpen] = useState(() => shouldOpenHomePopup(pathname))
+  const [priceModalOpen, setPriceModalOpen] = useState(false)
 
   useEffect(() => {
     document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'vi'
     translateDocument(locale)
   }, [locale])
+
+  useEffect(() => {
+    if (!shouldOpenHomePopup(pathname)) return
+
+    // Let the homepage render first, then show the announcement shortly after.
+    const popupTimer = window.setTimeout(() => setPriceModalOpen(true), 2000)
+    return () => window.clearTimeout(popupTimer)
+  }, [pathname])
 
   const changeLocale = (nextLocale: Locale) => {
     setLocale(nextLocale)
