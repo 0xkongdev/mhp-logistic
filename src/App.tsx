@@ -630,7 +630,7 @@ function App() {
               <a href="/gioi-thieu" aria-current={isIntroductionPage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="building.svg" /> Giới thiệu</a>
               <a href="/dich-vu" aria-current={isServicePage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="box.svg" /> Dịch vụ</a>
               <a href="/tin-tuc" aria-current={isNewsPage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="news.svg" /> Tin tức</a>
-              <a href="/bang-gia" aria-current={isPricePage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="pricing.svg" /> Bảng giá</a>
+              <a href="/bang-gia" aria-current={isPricePage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="pricing.svg" className="pricing-nav-icon" /> Bảng giá</a>
             </nav>
             <button
               className="menu-button"
