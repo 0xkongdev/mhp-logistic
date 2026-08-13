@@ -10,6 +10,16 @@ import './App.css'
 type Locale = 'vi' | 'zh'
 
 const localeStorageKey = 'mhp-logistic-locale'
+const skipHomePopupKey = 'mhp-logistic-skip-home-popup'
+
+function shouldOpenHomePopup(pathname: string) {
+  if (pathname !== '/') return false
+  if (sessionStorage.getItem(skipHomePopupKey) === 'true') {
+    sessionStorage.removeItem(skipHomePopupKey)
+    return false
+  }
+  return true
+}
 
 function getInitialLocale(): Locale {
   const savedLocale = localStorage.getItem(localeStorageKey)
@@ -249,7 +259,12 @@ const newsArticles = [
 
 function Logo({ footer = false }: { footer?: boolean }) {
   return (
-    <a className={`brand ${footer ? 'brand--footer' : ''}`} href="/" aria-label="MHP Logistic">
+    <a
+      className={`brand ${footer ? 'brand--footer' : ''}`}
+      href="/"
+      aria-label="MHP Logistic"
+      onClick={() => sessionStorage.setItem(skipHomePopupKey, 'true')}
+    >
       <img src={footer ? '/assets/figma-icons/footer-logo.svg' : '/assets/logo.png'} alt="MHP Logistic" />
       <span className="brand-divider" />
       <span className="brand-copy">
@@ -570,7 +585,7 @@ function App() {
   const isNewsPage = pathname === '/tin-tuc' || pathname.startsWith('/tin-tuc/')
   const isNewsDetailPage = pathname.startsWith('/tin-tuc/')
   const isPolicyPage = pathname === '/chinh-sach-bao-mat' || pathname === '/dieu-khoan-su-dung'
-  const [priceModalOpen, setPriceModalOpen] = useState(pathname === '/')
+  const [priceModalOpen, setPriceModalOpen] = useState(() => shouldOpenHomePopup(pathname))
 
   useEffect(() => {
     document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'vi'
