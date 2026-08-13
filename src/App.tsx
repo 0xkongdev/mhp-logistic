@@ -60,8 +60,8 @@ const chineseText: Record<string, string> = {
   'Order hàng các trang thương mại điện tử': '电商平台采购', 'Về chúng tôi': '关于我们', 'Vận chuyển và đặt': '运输与采购', 'hàng Trung': '中国货物',
   'Vận chuyển và đặt\nhàng Trung': '中国货物运输与采购', 'Các dịch vụ của\nchúng tôi': '我们的服务',
   'MHP cung cấp giải pháp vận chuyển quốc tế, khai báo hải quan và kho bãi thông minh. Chúng tôi giúp doanh nghiệp tối ưu hóa chuỗi cung ứng với chi phí thấp nhất và độ an toàn cao nhất.': 'MHP 提供国际运输、报关及智能仓储方案，帮助企业以更低成本和更高安全性优化供应链。',
-  'Quy trình đặt hàng': '采购流程', 'Bước 1': '第 1 步', 'Bước 2': '第 2 步', 'Bước 3': '第 3 步', 'Bước 4': '第 4 步', 'Bước 5': '第 5 步', 'Bước 7': '第 7 步', 'Bước 8': '第 8 步',
-  'Đặt hàng': '下单', 'Đóng gói hàng hóa': '货物包装', 'Vận chuyển nội địa': '国内运输', 'Kho Trung Quốc': '中国仓库', 'Kho Việt Nam': '越南仓库', 'Thông quan': '清关', 'Vận chuyển Việt Nam': '越南境内运输',
+  'Quy trình đặt hàng': '采购流程', 'Bước 1': '第 1 步', 'Bước 2': '第 2 步', 'Bước 3': '第 3 步', 'Bước 4': '第 4 步', 'Bước 5': '第 5 步', 'Bước 6': '第 6 步', 'Bước 7': '第 7 步', 'Bước 8': '第 8 步',
+  'Đặt hàng': '下单', 'Đóng gói hàng hóa': '货物包装', 'Vận chuyển nội địa': '国内运输', 'Kho Trung Quốc': '中国仓库', 'Vận chuyển quốc tế': '国际运输', 'Kho Việt Nam': '越南仓库', 'Thông quan': '清关', 'Vận chuyển Việt Nam': '越南境内运输',
   'Bảng giá vận chuyển': '运输报价表', 'Bảng giá tiểu ngạch': '小额贸易报价表', 'Bảng giá chi phí': '费用报价表', 'Bảng giá hàng nặng': '重货报价表', 'Bảng giá hàng siêu nặng': '超重货物报价表',
   'Các dịch vụ của': '我们的', 'chúng tôi': '服务', 'Vận Tải Đường Bộ': '公路运输', 'Vận Tải Đường Biển': '海运', 'Vận Tải Hàng Không': '空运',
   'Giải pháp vận tải đường bộ đáng tin cậy, đảm bảo giao hàng an toàn, đúng hẹn và tiết kiệm chi phí.': '可靠的公路运输方案，确保安全、准时且经济地交付。',
@@ -180,10 +180,10 @@ const steps = [
   ['Bước 2', 'Đóng gói hàng hóa'],
   ['Bước 3', 'Vận chuyển nội địa'],
   ['Bước 4', 'Kho Trung Quốc'],
-  ['Bước 5', 'Vận chuyển nội địa'],
-  ['Bước 7', 'Kho Việt Nam'],
-  ['Bước 8', 'Thông quan'],
-  ['Bước 5', 'Vận chuyển Việt Nam'],
+  ['Bước 5', 'Vận chuyển quốc tế'],
+  ['Bước 6', 'Kho Việt Nam'],
+  ['Bước 7', 'Thông quan'],
+  ['Bước 8', 'Vận chuyển Việt Nam'],
 ] as const
 
 const rates = [
