@@ -239,7 +239,8 @@ const articles = [
 
 const newsArticles = [
   {
-    image: '/assets/news-page-1.png',
+    // Use the same road-transport visual as the first customer-guide card.
+    image: '/assets/service-road.png',
     date: '24 / 08 / 2025',
     title: 'Những đơn vị giao hàng hóa uy tín và bảng giá giao hàng',
     text: 'Các cách hiệu quả để đăng tin tuyển dụng trong năm 2026',
