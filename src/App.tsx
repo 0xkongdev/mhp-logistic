@@ -80,7 +80,7 @@ const chineseText: Record<string, string> = {
   'Vận chuyển hiệu quả từ 1-3 ngày và bảng giá vận chuyển': '1–3 天高效运输及运输价格表', 'Cách order hàng từ trung quốc qua các kênh vận chuyển': '如何通过运输渠道从中国采购商品',
   'Kết nối thế giới thông qua giải pháp vận tải thông minh, nhanh chóng và tin cậy': '通过智能、快速、可靠的运输方案连接世界',
   'Tầng 3, tòa PCC1, số 44 Triều Khúc, Phường Thanh Liệt, Hanoi, Vietnam, 100000': '越南河内市 Thanh Liệt 坊 Triều Khúc 路 44 号 PCC1 大厦 3 楼，100000',
-  'THÔNG TIN & CHÍNH SÁCH': '信息与政策', 'Chính sách bảo mật': '隐私政策', 'Điều khoản sử dụng': '使用条款', 'Biểu phí dịch vụ': '服务收费表', 'Hướng dẫn đặt hàng': '订购指南', 'LIÊN HỆ HỖ TRỢ': '联系支持',
+  'THÔNG TIN & CHÍNH SÁCH': '信息与政策', 'Bảng giá dịch vụ': '服务报价表', 'Chính sách bảo mật': '隐私政策', 'Điều khoản sử dụng': '使用条款', 'Biểu phí dịch vụ': '服务收费表', 'Hướng dẫn đặt hàng': '订购指南', 'LIÊN HỆ HỖ TRỢ': '联系支持',
   'Các lô hàng được giao trên khắp mạng lưới vận tải khu vực và quốc tế.': '货物已送达遍及区域和国际运输网络的各地。',
   'Các đơn hàng được giao đúng hẹn thông qua hoạt động logistics đáng tin cậy.': '通过可靠的物流服务，订单均准时送达。',
   'Đối tác toàn cầu hỗ trợ vận chuyển hàng hóa và lưu thông hàng hoá.': '全球合作伙伴支持货物运输与流通。',
@@ -220,7 +220,8 @@ const reasons = [
 
 const articles = [
   {
-    image: '/assets/customer-guide-1.png',
+    // Keep the first guide card visually aligned with the first service card.
+    image: '/assets/service-road.png',
     title: 'Những đơn vị giao hàng hóa uy tín và bảng giá giao hàng',
     text: 'Các cách hiệu quả để đăng tin tuyển dụng trong năm 2026',
   },
@@ -279,14 +280,20 @@ const servicePageItems = [
   {
     image: '/assets/service-page-road.png',
     alt: 'Xe tải container vận chuyển hàng hóa đường bộ',
+    title: 'Vận Tải Đường Bộ',
+    text: 'Giải pháp vận tải đường bộ đáng tin cậy, đảm bảo giao hàng an toàn, đúng hẹn và tiết kiệm chi phí.',
   },
   {
     image: '/assets/service-page-sea.png',
     alt: 'Tàu container vận chuyển hàng hóa đường biển',
+    title: 'Vận Tải Đường Biển',
+    text: 'Giải pháp vận tải đường biển đáng tin cậy, đảm bảo vận chuyển hàng hóa toàn cầu an toàn và hiệu quả.',
   },
   {
     image: '/assets/service-page-air.png',
     alt: 'Máy bay vận chuyển hàng hóa quốc tế',
+    title: 'Vận Tải Hàng Không',
+    text: 'Dịch vụ vận tải hàng không nhanh chóng cho các lô hàng nhạy cảm về thời gian và yêu cầu giao hàng khẩn cấp.',
   },
 ]
 
@@ -305,8 +312,8 @@ function ServicePage() {
             <a className="service-page-item" href="/dich-vu" key={item.image}>
               <span className="service-page-item-media"><img src={item.image} alt={item.alt} /></span>
               <div>
-                <h2>Vận chuyển chính ngạch</h2>
-                <p>Quy trình vận chuyển từ Trung Quốc về Việt Nam, chuyên nghiệp, minh bạch và an toàn</p>
+                <h2>{item.title}</h2>
+                <p>{item.text}</p>
                 <span className="service-page-item-link">Xem chi tiết <ArrowRight /></span>
               </div>
             </a>
@@ -627,7 +634,7 @@ function App() {
           <div className="shell navbar">
             <Logo />
             <nav id="main-navigation" className={menuOpen ? 'open' : ''} aria-label="Điều hướng chính">
-              <a href="/chinh-sach-bao-mat" aria-current={isPolicyPage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="policy.png" /> Chính sách</a>
+              <a href="/chinh-sach-bao-mat" aria-current={isPolicyPage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="policy.svg" /> Chính sách</a>
               <a href="/dich-vu" aria-current={isServicePage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="box.svg" /> Dịch vụ</a>
               <a href="/tin-tuc" aria-current={isNewsPage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="news.svg" /> Tin tức</a>
               <a href="/bang-gia" aria-current={isPricePage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="pricing.svg" className="pricing-nav-icon" /> Bảng giá</a>
@@ -805,7 +812,7 @@ function App() {
       <footer>
         <div className="shell footer-main">
           <div><Logo footer /><p>Kết nối thế giới thông qua giải pháp vận tải thông minh, nhanh chóng và tin cậy</p></div>
-          <div><h3>THÔNG TIN &amp; CHÍNH SÁCH</h3><a href="/chinh-sach-bao-mat"><FigmaIcon name="footer-policy.svg" />Chính sách bảo mật</a><a href="/dieu-khoan-su-dung"><FigmaIcon name="footer-terms.svg" />Điều khoản sử dụng</a><a href="/bang-gia"><FigmaIcon name="footer-arrow.svg" />Biểu phí dịch vụ</a><a href="/dich-vu"><FigmaIcon name="footer-arrow.svg" />Hướng dẫn đặt hàng</a></div>
+          <div className="footer-policy-links"><h3>THÔNG TIN &amp; CHÍNH SÁCH</h3><a href="/chinh-sach-bao-mat"><FigmaIcon name="footer-policy.svg" />Chính sách</a><a href="/bang-gia"><FigmaIcon name="box.svg" className="footer-policy-box-icon" />Bảng giá dịch vụ</a><a href="/tin-tuc"><FigmaIcon name="footer-terms.svg" />Tin tức</a></div>
           <div><h3>LIÊN HỆ HỖ TRỢ</h3><a href="https://www.google.com/maps/search/?api=1&query=T%E1%BA%A7ng%203%2C%20t%C3%B2a%20PCC1%2C%20s%E1%BB%91%2044%20Tri%E1%BB%81u%20Kh%C3%BAc%2C%20Ph%C6%B0%E1%BB%9Dng%20Thanh%20Li%E1%BB%87t%2C%20Hanoi%2C%20Vietnam%2C%20100000" target="_blank" rel="noreferrer"><FigmaIcon name="location.svg" />Tầng 3, tòa PCC1, số 44 Triều Khúc, Phường Thanh Liệt, Hanoi, Vietnam, 100000</a><a href="tel:0898586622"><FigmaIcon name="footer-phone.svg" />0898 586 622</a><a href="mailto:support@erktransport.com"><FigmaIcon name="mail.svg" />support@erktransport.com</a></div>
         </div>
         <div className="shell footer-bottom"><span>© 2026 MHP Logistics. All rights reserved.</span><div><a href="/chinh-sach-bao-mat">Chính sách bảo mật</a><a href="/dieu-khoan-su-dung">Điều khoản sử dụng</a></div></div>

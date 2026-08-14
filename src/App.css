@@ -320,7 +320,7 @@ header { position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(4, 2
 .article-card { display: block; min-width: 0; }
 .article-card-media { position: relative; height: 240px; overflow: hidden; border-radius: 12px; }
 .article-card-media img { position: absolute; display: block; max-width: none; object-fit: cover; transition: transform .25s ease; }
-.article-card:nth-child(1) .article-card-media img { top: -67.62px; left: -4px; width: calc(100% + 4px); height: auto; }
+.article-card:nth-child(1) .article-card-media img { inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .article-card:nth-child(2) .article-card-media img { top: -202.62px; left: -6px; width: calc(100% + 26px); height: auto; }
 .article-card:nth-child(3) .article-card-media img { top: -66.62px; left: 50%; width: 100%; height: auto; transform: translateX(-50%); }
 .article-card > p { height: 24px; margin: 16px 0 8px; display: flex; align-items: center; gap: 12px; color: #808080; font-family: 'Plus Jakarta Sans Variable', sans-serif; font-size: 16px; line-height: 24px; }
@@ -337,9 +337,12 @@ footer { color: white; background: #07336b; }
 .brand--footer .brand-copy strong { font-size: 20px; }
 .footer-main > div:first-child > p { max-width: 390px; margin-top: 16px; color: #cbd5e2; line-height: 1.5; }
 .footer-main h3 { width: max-content; margin: 2px 0 28px; padding-bottom: 10px; border-bottom: 1px solid #a6b1c2; font-size: 14px; }
+.footer-policy-links h3 { margin-bottom: 20px; }
 .footer-main > div { display: flex; flex-direction: column; align-items: flex-start; }
 .footer-main a, .footer-main p { margin: 0 0 12px; display: flex; align-items: flex-start; gap: 8px; font-family: 'Plus Jakarta Sans Variable', sans-serif; font-size: 14px; line-height: 21px; font-weight: 400; }
 .footer-main .figma-icon { width: 16px; height: 16px; flex: 0 0 auto; object-fit: contain; margin-top: 2px; }
+.footer-policy-links a { margin-bottom: 10px; }
+.footer-policy-links .footer-policy-box-icon { filter: brightness(0) invert(1); }
 .footer-main > div:last-child .figma-icon { width: 20px; height: 20px; margin-top: 1px; }
 .footer-main > div:last-child a[href^='tel:'] { font-weight: 700; letter-spacing: .35px; }
 .footer-bottom { padding: 28px 0 33px; border-top: 1px solid #6d81bb; display: flex; align-items: center; justify-content: space-between; color: #9ca3af; font-size: 12px; }
