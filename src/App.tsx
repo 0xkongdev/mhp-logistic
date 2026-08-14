@@ -52,7 +52,7 @@ const chineseText: Record<string, string> = {
   'TIN TỨC MỚI NHẤT': '最新资讯', 'Ngày đăng': '发布日期',
   'Vận chuyển hiệu quả từ 1-3 ngày và bảng giá': '1–3 天高效运输及价格表', 'vận chuyển': '运输',
   'Dự thảo Thông tư mới có gì đáng chú ý?': '新通知草案有哪些值得关注之处？',
-  'Giới thiệu': '关于我们', 'Dịch vụ': '服务', 'Tin tức': '新闻', 'Bảng giá': '报价表',
+  'Chính sách': '政策', 'Dịch vụ': '服务', 'Tin tức': '新闻', 'Bảng giá': '报价表',
   'TỶ GIÁ: 4,000 VNĐ': '汇率：4,000 越南盾', 'Số điện thoại: 086.609.1688': '电话：086.609.1688', 'Ngôn ngữ:': '语言：',
   'MHP LOGISTIC': 'MHP 物流', 'Vận chuyển nhanh chóng,': '快速运输，', 'thông minh hơn': '更智能',
   'MHP logistics cung cấp giải pháp vận chuyển quốc tế, khai báo hải quan và kho bãi thông minh. Chúng tôi giúp doanh nghiệp tối ưu hóa chuỗi cung ứng': 'MHP Logistics 提供国际运输、报关及智能仓储解决方案，帮助企业优化供应链。',
@@ -627,7 +627,7 @@ function App() {
           <div className="shell navbar">
             <Logo />
             <nav id="main-navigation" className={menuOpen ? 'open' : ''} aria-label="Điều hướng chính">
-              <a href="/gioi-thieu" aria-current={isIntroductionPage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="building.svg" /> Giới thiệu</a>
+              <a href="/chinh-sach-bao-mat" aria-current={isPolicyPage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="policy.png" /> Chính sách</a>
               <a href="/dich-vu" aria-current={isServicePage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="box.svg" /> Dịch vụ</a>
               <a href="/tin-tuc" aria-current={isNewsPage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="news.svg" /> Tin tức</a>
               <a href="/bang-gia" aria-current={isPricePage ? 'page' : undefined} onClick={() => setMenuOpen(false)}><FigmaIcon name="pricing.svg" className="pricing-nav-icon" /> Bảng giá</a>
