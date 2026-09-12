@@ -53,7 +53,7 @@ const chineseText: Record<string, string> = {
   'Vận chuyển hiệu quả từ 1-3 ngày và bảng giá': '1–3 天高效运输及价格表', 'vận chuyển': '运输',
   'Dự thảo Thông tư mới có gì đáng chú ý?': '新通知草案有哪些值得关注之处？',
   'Chính sách': '政策', 'Dịch vụ': '服务', 'Tin tức': '新闻', 'Bảng giá': '报价表',
-  'TỶ GIÁ: 4,000 VNĐ': '汇率：4,000 越南盾', 'Số điện thoại: 086.609.1688': '电话：086.609.1688', 'Ngôn ngữ:': '语言：',
+  'TỶ GIÁ: 3,980 VNĐ': '汇率：3,980 越南盾', 'Số điện thoại: 086.609.1688': '电话：086.609.1688', 'Ngôn ngữ:': '语言：',
   'MHP LOGISTIC': 'MHP 物流', 'Vận chuyển nhanh chóng,': '快速运输，', 'thông minh hơn': '更智能',
   'MHP logistics cung cấp giải pháp vận chuyển quốc tế, khai báo hải quan và kho bãi thông minh. Chúng tôi giúp doanh nghiệp tối ưu hóa chuỗi cung ứng': 'MHP Logistics 提供国际运输、报关及智能仓储解决方案，帮助企业优化供应链。',
   'NHẬN TƯ VẤN & BÁO GIÁ NGAY': '立即获取咨询与报价', 'Họ và tên': '姓名', 'Số điện thoại': '电话号码', 'Nhu cầu nhập hàng': '采购需求', 'Đăng ký tư vấn': '预约咨询',
@@ -87,6 +87,8 @@ const chineseText: Record<string, string> = {
   'Theo dõi lô hàng và hỗ trợ logistics luôn sẵn sàng mọi lúc.': '货物追踪与物流支持随时为您服务。',
   'Dưới 100 triệu đồng': '低于 1 亿越南盾', 'Từ 100 triệu đến 200 triệu đồng': '1 亿至 2 亿越南盾', 'Trên 200 triệu đồng': '超过 2 亿越南盾',
   'Trên 3.000kg': '超过 3,000 公斤', 'Liên hệ': '联系我们', 'BẰNG TƯỜNG': '凭祥', 'HÀ NỘI': '河内',
+  'Trên 30m3': '30 立方米以上', '15 - 30 m3': '15–30 立方米', '5-15 m3': '5–15 立方米',
+  '1 - 5 m3': '1–5 立方米', 'Dưới 1m3': '1 立方米以下',
   '1.5m3 = 300 →499kg ( từ 1,000kg trở lên)': '1.5 立方米 = 300–499 公斤（1,000 公斤及以上）', '1.5m3 = 700kg ( từ 1,000kg trở lên)': '1.5 立方米 = 700 公斤（1,000 公斤及以上）', '1.5m3 = 1,000kg ( từ 1,000kg trở lên)': '1.5 立方米 = 1,000 公斤（1,000 公斤及以上）', '1.5m3 > 2,000kg': '1.5 立方米 > 2,000 公斤',
   '(Sắt thép, ốc vít, bàn lề...)': '（钢铁、螺丝、铰链等）',
   'Căn cứ pháp lý': '法律依据', 'Nghị định số 69/2018/NĐ-CP ngày 15/05/2018 của Chính phủ Việt Nam về xuất nhập khẩu hàng hóa': '越南政府关于货物进出口的第 69/2018/NĐ-CP 号法令（2018 年 5 月 15 日）。',
@@ -120,16 +122,14 @@ const chineseText: Record<string, string> = {
   'BẢNG GIÁ VẬN CHUYỂN CHÍNH NGẠCH': '正规贸易运输价格表',
   'PHÍ VẬN CHUYỂN VỚI HÀNG NẶNG (CHƯA BAO GỒM VAT)': '重货运输费用（未含增值税）',
   'TRỌNG LƯỢNG': '重量',
-  'HÀ NỘI (đ/Kg)': '河内（越南盾/公斤）',
-  'ĐÀ NẴNG/ HCM (đ/Kg)': '岘港/胡志明市（越南盾/公斤）',
+  'BẢNG TƯỜNG HÀ NỘI (đ/Kg)': '河内墙板（越南盾/公斤）',
+  'BẢNG TƯỜNG HCM (đ/Kg)': '胡志明市墙板（越南盾/公斤）',
   'ĐỐI VỚI HÀNG NGUYÊN CONT, NGUYÊN XE LIÊN HỆ HOTLINE': '整柜、整车货物请联系热线',
-  '>3000kg': '>3000 公斤',
+  '>5000kg': '>5000 公斤',
+  '3000kg - 5000kg': '3000–5000 公斤',
   '2000kg - 3000kg': '2000–3000 公斤',
   '1000kg - 2000kg': '1000–2000 公斤',
-  '500kd - 1000kg': '500–1000 公斤',
-  '200kg - 500kg': '200–500 公斤',
-  '100kg - 200kg': '100–200 公斤',
-  '0 - 100kg': '0–100 公斤',
+  'Dưới 1000kg': '1000 公斤以下',
   'Lưu ý: đơn hàng dưới 50kg làm tròn lên 50kg. Tối thiểu 50kg cho 1 mục hàng khai thuế': '注意：不足 50 公斤的订单按 50 公斤计费；每项报税货物最低为 50 公斤。',
   'Đóng thông báo bảng giá': '关闭价格表通知',
 }
@@ -340,20 +340,19 @@ const heavyRates = [
 ]
 
 const extraHeavyRates = [
-  ['1.5m3 = 300 →499kg ( từ 1,000kg trở lên)', '5.000đ/kg', '7.000đ/kg'],
-  ['1.5m3 = 700kg ( từ 1,000kg trở lên)', '4.000đ/kg', '8.000đ/kg'],
-  ['1.5m3 = 1,000kg ( từ 1,000kg trở lên)', '3.500đ/kg', '5.000đ/kg'],
-  ['1.5m3 > 2,000kg', '1.000đ/kg', '5.000đ/kg'],
+  ['Trên 30m3', 'Liên hệ', 'Liên hệ'],
+  ['15 - 30 m3', '1.000.000 đ/kg', '1.400.000 đ/kg'],
+  ['5-15 m3', '1.100.000 đ/kg', '1.500.000 đ/kg'],
+  ['1 - 5 m3', '1.200.000 đ/kg', '1.600.000 đ/kg'],
+  ['Dưới 1m3', '1.300.000 đ/kg', '1.700.000 đ/kg'],
 ]
 
 const announcementRates = [
-  ['>3000kg', '3.000 đ', '8.000 đ'],
-  ['2000kg - 3000kg', '3.500 đ', '8.500 đ'],
-  ['1000kg - 2000kg', '4.000 đ', '9.000 đ'],
-  ['500kd - 1000kg', '4.500 đ', '9.500 đ'],
-  ['200kg - 500kg', '5.000 đ', '10.000 đ'],
-  ['100kg - 200kg', '5.500 đ', '10.500 đ'],
-  ['0 - 100kg', '6.500 đ', '11.500 đ'],
+  ['>5000kg', 'Liên hệ', 'Liên hệ'],
+  ['3000kg - 5000kg', '5.000 đ', '10.000 đ'],
+  ['2000kg - 3000kg', '6.000 đ', '11.000 đ'],
+  ['1000kg - 2000kg', '7.000 đ', '12.000 đ'],
+  ['Dưới 1000kg', '8.000 đ', '13.000 đ'],
 ] as const
 
 function PricePage() {
@@ -569,7 +568,7 @@ function PriceAnnouncement({ onClose }: { onClose: () => void }) {
         <h2 id="price-modal-title">BẢNG GIÁ VẬN CHUYỂN CHÍNH NGẠCH</h2>
         <h3>PHÍ VẬN CHUYỂN VỚI HÀNG NẶNG (CHƯA BAO GỒM VAT)</h3>
         <table className="price-table">
-          <thead><tr><th>TRỌNG LƯỢNG</th><th>HÀ NỘI (đ/Kg)</th><th>ĐÀ NẴNG/ HCM (đ/Kg)</th></tr></thead>
+          <thead><tr><th>TRỌNG LƯỢNG</th><th>BẢNG TƯỜNG HÀ NỘI (đ/Kg)</th><th>BẢNG TƯỜNG HCM (đ/Kg)</th></tr></thead>
           <tbody>
             <tr className="price-table__alert"><td colSpan={3}>ĐỐI VỚI HÀNG NGUYÊN CONT, NGUYÊN XE LIÊN HỆ HOTLINE</td></tr>
             {announcementRates.map(([weight, hanoi, hcm]) => <tr key={weight}><td>{weight}</td><td>{hanoi}</td><td>{hcm}</td></tr>)}
@@ -618,7 +617,7 @@ function App() {
       <header>
         <div className="topbar">
           <div className="shell topbar-inner">
-            <span className="exchange"><FigmaIcon name="exchange.png" />TỶ GIÁ: 4,000 VNĐ</span>
+            <span className="exchange"><FigmaIcon name="exchange.png" />TỶ GIÁ: 3,980 VNĐ</span>
             <div className="topbar-info">
               <a href="tel:0866091688"><FigmaIcon name="phone.svg" /> Số điện thoại: 086.609.1688</a>
               <div className="topbar-language">
