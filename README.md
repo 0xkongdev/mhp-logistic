@@ -30,3 +30,45 @@ If you are developing a production application, we recommend enabling type-aware
 ```
 
 See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+
+## Lead capture
+
+The consultation form is served by the Cloudflare Worker. It stores each valid
+lead in the `DB` D1 binding and sends the notification through Resend. The
+Resend account used for the initial setup must be the account for
+`0xkong2610@gmail.com`; `onboarding@resend.dev` is only the initial sender.
+
+Set the Resend API key as a Cloudflare secret. Create the key in the Resend
+dashboard, then paste it only into Wrangler's hidden prompt. Do not put the
+key in chat, shell history, `.dev.vars`, source code, or documentation.
+
+```bash
+npx wrangler secret put RESEND_API_KEY
+```
+
+Apply the migration locally while developing, then apply it to the production
+D1 database before deploying:
+
+```bash
+npx wrangler d1 migrations apply DB --local
+npx wrangler d1 migrations apply DB --remote
+```
+
+Inspect the latest production leads with:
+
+```bash
+npx wrangler d1 execute DB --remote --command "SELECT id, full_name, phone, need, email_status, created_at FROM leads ORDER BY created_at DESC LIMIT 20"
+```
+
+Deploy the Worker and site assets with:
+
+```bash
+npm run deploy
+```
+
+`LEAD_EMAIL_FROM` is currently configured as `MHP Logistic
+<onboarding@resend.dev>` in `wrangler.jsonc`. For production, verify a sending
+domain in Resend, replace that value with an address on the verified domain
+(for example, `MHP Logistic <leads@example.com>`), and deploy again. Keep the
+recipient as `0xkong2610@gmail.com` unless the Worker code is intentionally
+changed.
