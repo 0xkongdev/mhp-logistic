@@ -1,6 +1,10 @@
+/// <reference types="node" />
 // @vitest-environment jsdom
 
-import { act, cleanup, render, screen } from '@testing-library/react'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+
+import { act, cleanup, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -109,4 +113,46 @@ describe.each(['vi', 'zh'] as const)('App form localization starting in %s', (in
     }
     expect(fetchMock).toHaveBeenCalledTimes(1)
   })
+})
+
+it('renders the quote-form heading with the approved compact typography', () => {
+  const style = document.createElement('style')
+  style.textContent = readFileSync(resolve('src/App.css'), 'utf8')
+  document.head.append(style)
+
+  try {
+    render(<App />)
+
+    const heading = screen.getByText(localized.vi.heading)
+    const styles = getComputedStyle(heading)
+
+    expect(styles.fontSize).toBe('20px')
+    expect(styles.lineHeight).toBe('32px')
+    expect(styles.fontWeight).toBe('600')
+  } finally {
+    style.remove()
+  }
+})
+
+it('links the support contact details to the matching address, phone, and email', () => {
+  render(<App />)
+  const footer = within(screen.getByRole('contentinfo'))
+
+  expect(footer.getByRole('link', { name: /Khu phố Giang Liễu, phường Phương Liễu, tỉnh Bắc Ninh\./i })).toHaveAttribute(
+    'href',
+    'https://www.google.com/maps/search/?api=1&query=Khu%20ph%E1%BB%91%20Giang%20Li%E1%BB%85u%2C%20ph%C6%B0%E1%BB%9Dng%20Ph%C6%B0%C6%A1ng%20Li%E1%BB%85u%2C%20t%E1%BB%89nh%20B%E1%BA%AFc%20Ninh',
+  )
+  expect(footer.getByRole('link', { name: /0969857874/i })).toHaveAttribute('href', 'tel:0969857874')
+  expect(footer.getByRole('link', { name: /mhplogistics@gmail\.com/i })).toHaveAttribute('href', 'mailto:mhplogistics@gmail.com')
+})
+
+it('keeps the current header phone number when switching languages', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+
+  const phoneLink = screen.getByRole('link', { name: 'Số điện thoại: 0969857874' })
+  expect(phoneLink).toHaveAttribute('href', 'tel:0969857874')
+
+  await user.click(screen.getByRole('button', { name: localized.zh.switchLabel }))
+  expect(phoneLink).toHaveAccessibleName('电话：0969857874')
 })

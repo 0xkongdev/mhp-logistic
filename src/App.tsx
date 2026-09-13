@@ -54,7 +54,7 @@ const chineseText: Record<string, string> = {
   'Vận chuyển hiệu quả từ 1-3 ngày và bảng giá': '1–3 天高效运输及价格表', 'vận chuyển': '运输',
   'Dự thảo Thông tư mới có gì đáng chú ý?': '新通知草案有哪些值得关注之处？',
   'Chính sách': '政策', 'Dịch vụ': '服务', 'Tin tức': '新闻', 'Bảng giá': '报价表',
-  'TỶ GIÁ: 3,980 VNĐ': '汇率：3,980 越南盾', 'Số điện thoại: 086.609.1688': '电话：086.609.1688', 'Ngôn ngữ:': '语言：',
+  'TỶ GIÁ: 3,980 VNĐ': '汇率：3,980 越南盾', 'Số điện thoại: 0969857874': '电话：0969857874', 'Ngôn ngữ:': '语言：',
   'MHP LOGISTIC': 'MHP 物流', 'Vận chuyển nhanh chóng,': '快速运输，', 'thông minh hơn': '更智能',
   'MHP logistics cung cấp giải pháp vận chuyển quốc tế, khai báo hải quan và kho bãi thông minh. Chúng tôi giúp doanh nghiệp tối ưu hóa chuỗi cung ứng': 'MHP Logistics 提供国际运输、报关及智能仓储解决方案，帮助企业优化供应链。',
   'NHẬN TƯ VẤN & BÁO GIÁ NGAY': '立即获取咨询与报价', 'Họ và tên': '姓名', 'Số điện thoại': '电话号码', 'Nhu cầu nhập hàng': '采购需求', 'Đăng ký tư vấn': '预约咨询',
@@ -624,7 +624,7 @@ function App() {
           <div className="shell topbar-inner">
             <span className="exchange"><FigmaIcon name="exchange.png" />TỶ GIÁ: 3,980 VNĐ</span>
             <div className="topbar-info">
-              <a href="tel:0866091688"><FigmaIcon name="phone.svg" /> Số điện thoại: 086.609.1688</a>
+              <a href="tel:0969857874"><FigmaIcon name="phone.svg" /> Số điện thoại: 0969857874</a>
               <div className="topbar-language">
                 <span className="topbar-language-label"><FigmaIcon name="globe.svg" />Ngôn ngữ:</span>
                 <div className="language-switcher" role="group" aria-label="Chọn ngôn ngữ">
@@ -810,7 +810,7 @@ function App() {
         <div className="shell footer-main">
           <div><Logo footer /><p>Kết nối thế giới thông qua giải pháp vận tải thông minh, nhanh chóng và tin cậy</p></div>
           <div className="footer-policy-links"><h3>THÔNG TIN &amp; CHÍNH SÁCH</h3><a href="/chinh-sach-bao-mat"><FigmaIcon name="footer-policy.svg" />Chính sách</a><a href="/bang-gia"><FigmaIcon name="box.svg" className="footer-policy-box-icon" />Bảng giá dịch vụ</a><a href="/tin-tuc"><FigmaIcon name="footer-terms.svg" />Tin tức</a></div>
-          <div><h3>LIÊN HỆ HỖ TRỢ</h3><a href="https://www.google.com/maps/search/?api=1&query=T%E1%BA%A7ng%203%2C%20t%C3%B2a%20PCC1%2C%20s%E1%BB%91%2044%20Tri%E1%BB%81u%20Kh%C3%BAc%2C%20Ph%C6%B0%E1%BB%9Dng%20Thanh%20Li%E1%BB%87t%2C%20Hanoi%2C%20Vietnam%2C%20100000" target="_blank" rel="noreferrer"><FigmaIcon name="location.svg" />Tầng 3, tòa PCC1, số 44 Triều Khúc, Phường Thanh Liệt, Hanoi, Vietnam, 100000</a><a href="tel:0898586622"><FigmaIcon name="footer-phone.svg" />0898 586 622</a><a href="mailto:support@erktransport.com"><FigmaIcon name="mail.svg" />support@erktransport.com</a></div>
+          <div><h3>LIÊN HỆ HỖ TRỢ</h3><a href="https://www.google.com/maps/search/?api=1&query=Khu%20ph%E1%BB%91%20Giang%20Li%E1%BB%85u%2C%20ph%C6%B0%E1%BB%9Dng%20Ph%C6%B0%C6%A1ng%20Li%E1%BB%85u%2C%20t%E1%BB%89nh%20B%E1%BA%AFc%20Ninh" target="_blank" rel="noreferrer"><FigmaIcon name="location.svg" />Khu phố Giang Liễu, phường Phương Liễu, tỉnh Bắc Ninh.</a><a href="tel:0969857874"><FigmaIcon name="footer-phone.svg" />0969857874</a><a href="mailto:mhplogistics@gmail.com"><FigmaIcon name="mail.svg" />mhplogistics@gmail.com</a></div>
         </div>
         <div className="shell footer-bottom"><span>© 2026 MHP Logistics. All rights reserved.</span><div><a href="/chinh-sach-bao-mat">Chính sách bảo mật</a><a href="/dieu-khoan-su-dung">Điều khoản sử dụng</a></div></div>
       </footer>
