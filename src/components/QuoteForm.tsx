@@ -114,7 +114,7 @@ export function QuoteForm({ locale }: QuoteFormProps) {
               clearFieldError('fullName')
             }}
           />
-          {errors.fullName && <span id="quote-form-full-name-error" className="quote-form__validation">{messages.required.fullName}</span>}
+          {errors.fullName && <span id="quote-form-full-name-error" className="quote-form__validation" data-i18n="react">{messages.required.fullName}</span>}
         </div>
         <div className="quote-form__field">
           <input
@@ -132,7 +132,7 @@ export function QuoteForm({ locale }: QuoteFormProps) {
               clearFieldError('phone')
             }}
           />
-          {errors.phone && <span id="quote-form-phone-error" className="quote-form__validation">{messages.required.phone}</span>}
+          {errors.phone && <span id="quote-form-phone-error" className="quote-form__validation" data-i18n="react">{messages.required.phone}</span>}
         </div>
         <div className="quote-form__field">
           <input
@@ -148,9 +148,9 @@ export function QuoteForm({ locale }: QuoteFormProps) {
               clearFieldError('need')
             }}
           />
-          {errors.need && <span id="quote-form-need-error" className="quote-form__validation">{messages.required.need}</span>}
+          {errors.need && <span id="quote-form-need-error" className="quote-form__validation" data-i18n="react">{messages.required.need}</span>}
         </div>
-        <button type="submit" disabled={status === 'submitting'}>
+        <button type="submit" disabled={status === 'submitting'} data-i18n="react">
           {status === 'submitting' ? messages.submitting : messages.submit}
         </button>
       </div>
@@ -167,6 +167,7 @@ export function QuoteForm({ locale }: QuoteFormProps) {
       <div
         className={`quote-form__result${status === 'success' || status === 'error' ? ` quote-form__result--${status}` : ''}`}
         aria-live="polite"
+        data-i18n="react"
       >
         {status === 'success' ? messages.success : status === 'error' ? messages.error : ''}
       </div>

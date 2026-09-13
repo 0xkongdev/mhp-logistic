@@ -72,3 +72,12 @@ domain in Resend, replace that value with an address on the verified domain
 (for example, `MHP Logistic <leads@example.com>`), and deploy again. Keep the
 recipient as `0xkong2610@gmail.com` unless the Worker code is intentionally
 changed.
+
+Worker logs emit structured `lead_notification` events with a lead ID and an
+outcome: `sent`, `provider_failed`, or `sent_status_write_failed`. Provider
+acceptance includes the message ID; failures use safe error codes without
+visitor details or credentials. If Resend accepts an email but writing its
+sent status to D1 fails, the Worker leaves the row pending and logs both IDs
+for manual reconciliation. Check the provider message before updating that
+row; do not resend it automatically. Email notifications have no automatic
+retry.

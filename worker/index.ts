@@ -39,6 +39,7 @@ export default {
       return handleCreateLead(request, {
         repository: createD1LeadRepository(env.DB),
         notifier: createLeadNotifier(env),
+        logNotification: (result) => console.log({ event: 'lead_notification', ...result }),
         defer: (promise) => ctx.waitUntil(promise),
         randomUUID: () => crypto.randomUUID(),
         now: () => new Date(),

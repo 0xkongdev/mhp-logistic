@@ -142,7 +142,8 @@ const translatedNodes = new WeakMap<Text, string>()
 function translateDocument(locale: Locale) {
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
   for (let node = walker.nextNode() as Text | null; node; node = walker.nextNode() as Text | null) {
-    if (!node.parentElement || ['SCRIPT', 'STYLE'].includes(node.parentElement.tagName)) continue
+    // React-localized messages own their text across both locale and state changes.
+    if (!node.parentElement || node.parentElement.closest('script, style, [data-i18n="react"]')) continue
     const source = translatedNodes.get(node) ?? node.nodeValue ?? ''
     translatedNodes.set(node, source)
     const leading = source.match(/^\s*/)?.[0] ?? ''
@@ -152,6 +153,7 @@ function translateDocument(locale: Locale) {
   }
 
   document.querySelectorAll<HTMLElement>('[placeholder], [aria-label], [alt]').forEach((element) => {
+    if (element.closest('[data-i18n="react"]')) return
     for (const attribute of ['placeholder', 'aria-label', 'alt']) {
       const sourceKey = `i18n${attribute.replace(/(^|-)([a-z])/g, (_, __, letter) => letter.toUpperCase())}`
       const source = element.dataset[sourceKey] ?? element.getAttribute(attribute)

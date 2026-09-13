@@ -5,6 +5,7 @@ import {
   renderLeadEmail,
   validateLeadPayload,
   type LeadNotifier,
+  type LeadNotificationResult,
   type LeadRepository,
   type LeadServices,
   type StoredLead,
@@ -75,9 +76,64 @@ describe('validateLeadPayload', () => {
       expect(validateLeadPayload({ ...validPayload, phone }).ok).toBe(false)
     },
   )
+
+  it.each([
+    '12345678',
+    '123456789012345',
+    '0901234567',
+    '+84 90 123 4567',
+    '(090) 123-4567',
+    '090.123.4567',
+  ])('accepts phone syntax with common separators: %s', (phone) => {
+    expect(validateLeadPayload({ ...validPayload, phone }).ok).toBe(true)
+  })
+
+  it.each([
+    'abc0901234567',
+    '++0901234567',
+    '09<script>01234567',
+    '090+1234567',
+    '0901234567ext1',
+    '090/123/4567',
+    '090\n1234567',
+    '090\t1234567',
+  ])('rejects disallowed characters or misplaced plus in phone %s', (phone) => {
+    expect(validateLeadPayload({ ...validPayload, phone })).toEqual({
+      ok: false,
+      error: 'Số điện thoại không hợp lệ.',
+    })
+  })
 })
 
 describe('renderLeadEmail', () => {
+  it.each([
+    ['090 123 4567', '0901234567'],
+    ['+84 (90) 123-4567', '+84901234567'],
+    ['090.123.4567', '0901234567'],
+  ])('links phone %s to a normalized tel target while preserving its visible formatting', (phone, target) => {
+    const email = renderLeadEmail({
+      ...validPayload,
+      phone,
+      id: 'lead-123',
+      createdAt: '2026-09-13T03:04:05.000Z',
+    })
+
+    expect(email.html).toContain(`<a href="tel:${target}">${phone}</a>`)
+    expect(email.text).toContain(`Điện thoại: ${phone}`)
+  })
+
+  it('escapes an invalid stored phone as visible text without creating an unsafe phone link', () => {
+    const email = renderLeadEmail({
+      ...validPayload,
+      phone: '0901234567" onclick="alert(1)',
+      id: 'lead-123',
+      createdAt: '2026-09-13T03:04:05.000Z',
+    })
+
+    expect(email.html).toContain('0901234567&quot; onclick=&quot;alert(1)')
+    expect(email.html).not.toContain('<a ')
+  })
+
   it('escapes every visitor-controlled field and includes lead metadata', () => {
     const email = renderLeadEmail({
       id: 'lead-123',
@@ -105,6 +161,7 @@ class MemoryLeadRepository implements LeadRepository {
   sent: Array<{ id: string; messageId: string; updatedAt: string }> = []
   failed: Array<{ id: string; error: string; updatedAt: string }> = []
   throwOnInsert = false
+  sentWriteError: Error | undefined
   private insertGate: Promise<void> = Promise.resolve()
   private readonly insertStartedDeferred = createDeferred()
   readonly insertStarted = this.insertStartedDeferred.promise
@@ -130,6 +187,7 @@ class MemoryLeadRepository implements LeadRepository {
     messageId: string,
     updatedAt: string,
   ): Promise<void> {
+    if (this.sentWriteError) throw this.sentWriteError
     this.sent.push({ id, messageId, updatedAt })
   }
 
@@ -173,9 +231,11 @@ function createServiceHarness() {
   const repository = new MemoryLeadRepository(events)
   const notifier = new MemoryLeadNotifier(events)
   const deferred: Promise<void>[] = []
+  const notificationResults: LeadNotificationResult[] = []
   const services: LeadServices = {
     repository,
     notifier,
+    logNotification: (result) => notificationResults.push(result),
     defer(promise) {
       events.push('defer')
       deferred.push(promise)
@@ -184,7 +244,7 @@ function createServiceHarness() {
     now: () => new Date('2026-09-13T03:04:05.000Z'),
   }
 
-  return { deferred, events, notifier, repository, services }
+  return { deferred, events, notifier, notificationResults, repository, services }
 }
 
 function jsonRequest(body: unknown, headers?: HeadersInit): Request {
@@ -324,7 +384,7 @@ describe('handleCreateLead', () => {
   })
 
   it('marks a successful notification as sent with the provider ID', async () => {
-    const { deferred, repository, services } = createServiceHarness()
+    const { deferred, notificationResults, repository, services } = createServiceHarness()
 
     await handleCreateLead(jsonRequest(validPayload), services)
     await Promise.all(deferred)
@@ -337,15 +397,61 @@ describe('handleCreateLead', () => {
       },
     ])
     expect(repository.failed).toEqual([])
+    expect(notificationResults).toEqual([
+      { leadId: 'lead-123', outcome: 'sent', messageId: 'message-456' },
+    ])
   })
 
-  it('marks a failed notification with an error truncated to 300 characters', async () => {
-    const { deferred, notifier, repository, services } = createServiceHarness()
-    notifier.error = new Error('x'.repeat(400))
+  it('leaves the accepted lead pending when persisting the sent status fails, without another email or a failed status', async () => {
+    const { deferred, notifier, notificationResults, repository, services } = createServiceHarness()
+    repository.sentWriteError = new Error('database status write failed')
 
-    await handleCreateLead(jsonRequest(validPayload), services)
+    const response = await handleCreateLead(jsonRequest(validPayload), services)
     await Promise.all(deferred)
 
+    expect(response.status).toBe(202)
+    expect(repository.inserted).toHaveLength(1)
+    expect(repository.sent).toEqual([])
+    expect(repository.failed).toEqual([])
+    expect(notifier.leads).toHaveLength(1)
+    expect(notificationResults).toEqual([
+      {
+        leadId: 'lead-123',
+        outcome: 'sent_status_write_failed',
+        messageId: 'message-456',
+        errorCode: 'SENT_STATUS_WRITE_FAILED',
+      },
+    ])
+  })
+
+  it.each(['sent', 'provider_failed', 'sent_status_write_failed'] as const)(
+    'logs safe operational evidence for %s without visitor fields, credentials, or raw exceptions',
+    async (outcome) => {
+      const { deferred, notifier, notificationResults, repository, services } = createServiceHarness()
+      const sensitiveError = new Error('resend-secret Nguyen Van A 090 123 4567 Nhap hang')
+      if (outcome === 'provider_failed') notifier.error = sensitiveError
+      if (outcome === 'sent_status_write_failed') repository.sentWriteError = sensitiveError
+
+      await handleCreateLead(jsonRequest(validPayload), services)
+      await Promise.all(deferred)
+
+      expect(notificationResults).toHaveLength(1)
+      expect(notificationResults[0]).toMatchObject({ leadId: 'lead-123', outcome })
+      for (const sensitive of ['resend-secret', validPayload.fullName, validPayload.phone, validPayload.need, sensitiveError.message]) {
+        expect(JSON.stringify(notificationResults)).not.toContain(sensitive)
+      }
+    },
+  )
+
+  it('marks a failed notification with an error truncated to 300 characters', async () => {
+    const { deferred, notifier, notificationResults, repository, services } = createServiceHarness()
+    notifier.error = new Error('x'.repeat(400))
+
+    const response = await handleCreateLead(jsonRequest(validPayload), services)
+    await Promise.all(deferred)
+
+    expect(response.status).toBe(202)
+    expect(notifier.leads).toHaveLength(1)
     expect(repository.sent).toEqual([])
     expect(repository.failed).toHaveLength(1)
     expect(repository.failed[0]).toMatchObject({
@@ -354,5 +460,8 @@ describe('handleCreateLead', () => {
     })
     expect(repository.failed[0].error).toHaveLength(300)
     expect(repository.failed[0].error).toBe(`Error: ${'x'.repeat(293)}`)
+    expect(notificationResults).toEqual([
+      { leadId: 'lead-123', outcome: 'provider_failed', errorCode: 'NOTIFICATION_SEND_FAILED' },
+    ])
   })
 })

@@ -31,9 +31,16 @@ export interface LeadNotifier {
   send(lead: StoredLead): Promise<string>
 }
 
+export type LeadNotificationResult = { leadId: string } & (
+  | { outcome: 'sent'; messageId: string }
+  | { outcome: 'provider_failed'; errorCode: 'NOTIFICATION_SEND_FAILED' }
+  | { outcome: 'sent_status_write_failed'; messageId: string; errorCode: 'SENT_STATUS_WRITE_FAILED' }
+)
+
 export type LeadServices = {
   repository: LeadRepository
   notifier: LeadNotifier
+  logNotification(result: LeadNotificationResult): void
   defer(promise: Promise<void>): void
   randomUUID(): string
   now(): Date
@@ -44,6 +51,13 @@ export type ValidationResult =
   | { ok: false; error: string }
 
 const invalid = (error: string): ValidationResult => ({ ok: false, error })
+
+function normalizePhone(phone: string): string | null {
+  if (phone.length > LEAD_LIMITS.phone || !/^\+?[0-9 ().-]+$/.test(phone)) return null
+  const digits = phone.replace(/\D/g, '')
+  if (digits.length < 8 || digits.length > 15) return null
+  return `${phone.startsWith('+') ? '+' : ''}${digits}`
+}
 
 export function validateLeadPayload(value: unknown): ValidationResult {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) {
@@ -84,8 +98,7 @@ export function validateLeadPayload(value: unknown): ValidationResult {
     return invalid('Thông tin vượt quá độ dài cho phép.')
   }
 
-  const phoneDigitCount = lead.phone.replace(/\D/g, '').length
-  if (phoneDigitCount < 8 || phoneDigitCount > 15) {
+  if (!normalizePhone(lead.phone)) {
     return invalid('Số điện thoại không hợp lệ.')
   }
 
@@ -127,13 +140,18 @@ export function renderLeadEmail(lead: StoredLead): {
     `Trang nguồn: ${lead.sourcePath}`,
   ].join('\n')
 
+  const phoneTarget = normalizePhone(lead.phone)
+  const phoneHtml = phoneTarget
+    ? `<a href="${escapeHtml(`tel:${phoneTarget}`)}">${escapeHtml(lead.phone)}</a>`
+    : escapeHtml(lead.phone)
+
   const html = `
     <h1>Có khách hàng mới đăng ký tư vấn</h1>
     <dl>
       <dt>Mã lead</dt><dd>${escapeHtml(lead.id)}</dd>
       <dt>Thời gian</dt><dd>${escapeHtml(submittedAt)}</dd>
       <dt>Họ tên</dt><dd>${escapeHtml(lead.fullName)}</dd>
-      <dt>Điện thoại</dt><dd>${escapeHtml(lead.phone)}</dd>
+      <dt>Điện thoại</dt><dd>${phoneHtml}</dd>
       <dt>Nhu cầu</dt><dd>${escapeHtml(lead.need)}</dd>
       <dt>Trang nguồn</dt><dd>${escapeHtml(lead.sourcePath)}</dd>
     </dl>
@@ -209,20 +227,42 @@ export async function handleCreateLead(
   }
 
   const notification = (async () => {
+    let messageId: string
     try {
-      const messageId = await services.notifier.send(lead)
-      await services.repository.markEmailSent(
-        lead.id,
-        messageId,
-        services.now().toISOString(),
-      )
+      messageId = await services.notifier.send(lead)
     } catch (error) {
+      services.logNotification({
+        leadId: lead.id,
+        outcome: 'provider_failed',
+        errorCode: 'NOTIFICATION_SEND_FAILED',
+      })
       await services.repository.markEmailFailed(
         lead.id,
         String(error).slice(0, 300),
         services.now().toISOString(),
       )
+      return
     }
+
+    try {
+      await services.repository.markEmailSent(
+        lead.id,
+        messageId,
+        services.now().toISOString(),
+      )
+    } catch {
+      // The provider accepted this email. Preserve pending for reconciliation;
+      // a failed status or another send would misrepresent that outcome.
+      services.logNotification({
+        leadId: lead.id,
+        outcome: 'sent_status_write_failed',
+        messageId,
+        errorCode: 'SENT_STATUS_WRITE_FAILED',
+      })
+      return
+    }
+
+    services.logNotification({ leadId: lead.id, outcome: 'sent', messageId })
   })()
 
   services.defer(notification)

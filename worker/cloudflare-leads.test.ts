@@ -21,7 +21,7 @@ type RecordedStatement = {
   parameters: unknown[]
 }
 
-function createRecordingD1() {
+function createRecordingD1(sentWriteError?: Error) {
   const statements: RecordedStatement[] = []
   const db = {
     prepare(sql: string) {
@@ -34,6 +34,7 @@ function createRecordingD1() {
           return this
         },
         async run() {
+          if (sentWriteError && sql.includes("email_status = 'sent'")) throw sentWriteError
           return {}
         },
       }
@@ -65,6 +66,7 @@ const routeFetch = worker.fetch as unknown as (
 
 afterEach(() => {
   vi.unstubAllGlobals()
+  vi.restoreAllMocks()
 })
 
 describe('createD1LeadRepository', () => {
@@ -201,6 +203,7 @@ describe('Worker routes', () => {
   })
 
   it('routes lead submissions through D1 and Resend with the fixed recipient', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
     const { db, statements } = createRecordingD1()
     const deferred: Promise<unknown>[] = []
     const requests: Array<{ input: RequestInfo | URL; init?: RequestInit }> = []
@@ -243,9 +246,16 @@ describe('Worker routes', () => {
     })
     expect(normalizeSql(statements[1].sql)).toContain("email_status = 'sent'")
     expect(statements[1].parameters[0]).toBe('email_123')
+    expect(log).toHaveBeenCalledExactlyOnceWith({
+      event: 'lead_notification',
+      leadId: statements[0].parameters[0],
+      outcome: 'sent',
+      messageId: 'email_123',
+    })
   })
 
   it('still persists a lead and marks email failed when email configuration is absent', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
     const { db, statements } = createRecordingD1()
     const deferred: Promise<unknown>[] = []
     const unexpectedFetch = vi.fn(async () => Response.json({ id: 'unexpected' }))
@@ -278,5 +288,56 @@ describe('Worker routes', () => {
     expect(normalizeSql(statements[1].sql)).toContain("email_status = 'failed'")
     expect(statements[1].parameters[0]).toContain('not configured')
     expect(String(statements[1].parameters[0]).length).toBeLessThanOrEqual(300)
+    expect(log).toHaveBeenCalledExactlyOnceWith({
+      event: 'lead_notification',
+      leadId: statements[0].parameters[0],
+      outcome: 'provider_failed',
+      errorCode: 'NOTIFICATION_SEND_FAILED',
+    })
+  })
+
+  it('logs reconciliation IDs when D1 cannot persist a sent notification without exposing raw errors or sending again', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
+    const { db, statements } = createRecordingD1(new Error('resend-secret Nguyen Van A 090 123 4567 Nhap hang tu Trung Quoc'))
+    const deferred: Promise<unknown>[] = []
+    const fetchMock = vi.fn(async () => Response.json({ id: 'email_123' }))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const response = await routeFetch(
+      new Request('https://mhp.test/api/leads', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          fullName: lead.fullName,
+          phone: lead.phone,
+          need: lead.need,
+          sourcePath: lead.sourcePath,
+          website: '',
+        }),
+      }),
+      {
+        DB: db,
+        LEAD_EMAIL_FROM: 'MHP Logistic <onboarding@resend.dev>',
+        RESEND_API_KEY: 'resend-secret',
+      },
+      { waitUntil: (promise) => deferred.push(promise) },
+    )
+    await Promise.all(deferred)
+
+    expect(response.status).toBe(202)
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(statements).toHaveLength(2)
+    expect(normalizeSql(statements[0].sql)).toContain("'pending'")
+    expect(normalizeSql(statements[1].sql)).toContain("email_status = 'sent'")
+    expect(log).toHaveBeenCalledExactlyOnceWith({
+      event: 'lead_notification',
+      leadId: statements[0].parameters[0],
+      outcome: 'sent_status_write_failed',
+      messageId: 'email_123',
+      errorCode: 'SENT_STATUS_WRITE_FAILED',
+    })
+    for (const sensitive of ['resend-secret', lead.fullName, lead.phone, lead.need]) {
+      expect(JSON.stringify(log.mock.calls)).not.toContain(sensitive)
+    }
   })
 })
