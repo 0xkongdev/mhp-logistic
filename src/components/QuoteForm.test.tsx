@@ -152,6 +152,26 @@ describe('QuoteForm', () => {
     expect(honeypot).toHaveAttribute('autocomplete', 'off')
   })
 
+  it('updates visible validation errors when the locale changes', async () => {
+    const user = userEvent.setup()
+    const { rerender } = render(<QuoteForm locale="vi" />)
+
+    await user.click(screen.getByRole('button', { name: 'Đăng ký tư vấn' }))
+    expect(screen.getByText('Vui lòng nhập họ và tên.')).toBeInTheDocument()
+    expect(screen.getByText('Vui lòng nhập số điện thoại.')).toBeInTheDocument()
+    expect(screen.getByText('Vui lòng nhập nhu cầu nhập hàng.')).toBeInTheDocument()
+
+    rerender(<QuoteForm locale="zh" />)
+    expect(screen.getByText('请输入姓名。')).toBeInTheDocument()
+    expect(screen.getByText('请输入电话号码。')).toBeInTheDocument()
+    expect(screen.getByText('请输入采购需求。')).toBeInTheDocument()
+    expect(screen.queryByText('Vui lòng nhập họ và tên.')).not.toBeInTheDocument()
+
+    rerender(<QuoteForm locale="vi" />)
+    expect(screen.getByText('Vui lòng nhập họ và tên.')).toBeInTheDocument()
+    expect(screen.queryByText('请输入姓名。')).not.toBeInTheDocument()
+  })
+
   it('renders validation, submitting, success, and error feedback in Chinese', async () => {
     const pending = createDeferred<{ ok: boolean; status: number; json(): Promise<unknown> }>()
     const fetchMock = vi.fn()

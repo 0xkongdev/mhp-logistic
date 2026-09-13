@@ -3,7 +3,7 @@ import { useState, type FormEvent } from 'react'
 type Locale = 'vi' | 'zh'
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
 type FieldName = 'fullName' | 'phone' | 'need'
-type FieldErrors = Partial<Record<FieldName, string>>
+type FieldErrors = Partial<Record<FieldName, true>>
 
 type QuoteFormProps = {
   locale: Locale
@@ -57,9 +57,9 @@ export function QuoteForm({ locale }: QuoteFormProps) {
     if (status === 'submitting') return
 
     const nextErrors: FieldErrors = {}
-    if (!fullName.trim()) nextErrors.fullName = messages.required.fullName
-    if (!phone.trim()) nextErrors.phone = messages.required.phone
-    if (!need.trim()) nextErrors.need = messages.required.need
+    if (!fullName.trim()) nextErrors.fullName = true
+    if (!phone.trim()) nextErrors.phone = true
+    if (!need.trim()) nextErrors.need = true
 
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length > 0) {
@@ -114,7 +114,7 @@ export function QuoteForm({ locale }: QuoteFormProps) {
               clearFieldError('fullName')
             }}
           />
-          {errors.fullName && <span id="quote-form-full-name-error" className="quote-form__validation">{errors.fullName}</span>}
+          {errors.fullName && <span id="quote-form-full-name-error" className="quote-form__validation">{messages.required.fullName}</span>}
         </div>
         <div className="quote-form__field">
           <input
@@ -132,7 +132,7 @@ export function QuoteForm({ locale }: QuoteFormProps) {
               clearFieldError('phone')
             }}
           />
-          {errors.phone && <span id="quote-form-phone-error" className="quote-form__validation">{errors.phone}</span>}
+          {errors.phone && <span id="quote-form-phone-error" className="quote-form__validation">{messages.required.phone}</span>}
         </div>
         <div className="quote-form__field">
           <input
@@ -148,7 +148,7 @@ export function QuoteForm({ locale }: QuoteFormProps) {
               clearFieldError('need')
             }}
           />
-          {errors.need && <span id="quote-form-need-error" className="quote-form__validation">{errors.need}</span>}
+          {errors.need && <span id="quote-form-need-error" className="quote-form__validation">{messages.required.need}</span>}
         </div>
         <button type="submit" disabled={status === 'submitting'}>
           {status === 'submitting' ? messages.submitting : messages.submit}
