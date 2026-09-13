@@ -105,14 +105,23 @@ class MemoryLeadRepository implements LeadRepository {
   sent: Array<{ id: string; messageId: string; updatedAt: string }> = []
   failed: Array<{ id: string; error: string; updatedAt: string }> = []
   throwOnInsert = false
+  private insertGate: Promise<void> = Promise.resolve()
+  private readonly insertStartedDeferred = createDeferred()
+  readonly insertStarted = this.insertStartedDeferred.promise
 
   constructor(private readonly events: string[]) {}
 
+  blockInsertUntil(promise: Promise<void>): void {
+    this.insertGate = promise
+  }
+
   async insert(lead: StoredLead): Promise<void> {
     this.events.push('insert')
+    this.insertStartedDeferred.resolve()
     if (this.throwOnInsert) {
       throw new Error('database unavailable')
     }
+    await this.insertGate
     this.inserted.push(lead)
   }
 
@@ -148,6 +157,15 @@ class MemoryLeadNotifier implements LeadNotifier {
     }
     return this.messageId
   }
+}
+
+function createDeferred() {
+  let resolve!: () => void
+  const promise = new Promise<void>((complete) => {
+    resolve = complete
+  })
+
+  return { promise, resolve }
 }
 
 function createServiceHarness() {
@@ -242,10 +260,13 @@ describe('handleCreateLead', () => {
     expect(response.status).toBe(405)
   })
 
-  it('inserts one trimmed lead before deferring notification and returns 202', async () => {
+  it('waits for insertion to complete before deferring notification or returning 202', async () => {
     const { deferred, events, repository, services } = createServiceHarness()
+    const insertCompletion = createDeferred()
+    repository.blockInsertUntil(insertCompletion.promise)
+    let responseResolved = false
 
-    const response = await handleCreateLead(
+    const responsePromise = handleCreateLead(
       jsonRequest({
         ...validPayload,
         fullName: '  Nguyen Van A  ',
@@ -254,6 +275,19 @@ describe('handleCreateLead', () => {
       }),
       services,
     )
+    void responsePromise.then(() => {
+      responseResolved = true
+    })
+
+    await repository.insertStarted
+    await Promise.resolve()
+
+    expect(responseResolved).toBe(false)
+    expect(repository.inserted).toEqual([])
+    expect(deferred).toEqual([])
+
+    insertCompletion.resolve()
+    const response = await responsePromise
 
     expect(response.status).toBe(202)
     await expect(response.json()).resolves.toEqual({
