@@ -175,10 +175,18 @@ header { position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(4, 2
 .hero-copy > p:last-child { max-width: 722px; margin: 12px 0 0; font-size: 16px; line-height: 28px; font-weight: 400; color: #eef3f9; }
 .quote-form { width: 833px; margin-top: 48px; padding: 24px; border-radius: 8px; color: var(--text); background: rgba(255,255,255,.94); box-shadow: 0 16px 40px rgba(0,0,0,.18); }
 .quote-form > strong { display: block; margin-bottom: 16px; font-size: 24px; line-height: 32px; font-weight: 600; }
-.quote-form > div { display: grid; grid-template-columns: repeat(3, 200px) 147px; gap: 11px; }
+.quote-form__grid { display: grid; grid-template-columns: repeat(3, 200px) 147px; gap: 11px; align-items: start; }
+.quote-form__field { min-width: 0; }
 .quote-form input { width: 100%; height: 48px; padding: 0 12px; border: 1px solid #dfe3e9; border-radius: 5px; outline: none; background: white; color: #111827; font-size: 16px; line-height: 24px; }
 .quote-form input:focus { border-color: #2e4a8a; box-shadow: 0 0 0 3px rgba(46,74,138,.12); }
-.quote-form button { border: 0; border-radius: 5px; color: white; background: #ef3b31; font-weight: 600; }
+.quote-form input[aria-invalid='true'] { border-color: #c9221a; }
+.quote-form button { min-height: 48px; border: 0; border-radius: 5px; color: white; background: #ef3b31; font-weight: 600; }
+.quote-form button:disabled { cursor: wait; opacity: .65; }
+.quote-form__validation { display: block; margin-top: 5px; color: #b42318; font-size: 12px; line-height: 16px; }
+.quote-form .quote-form__honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; padding: 0; overflow: hidden; }
+.quote-form__result { min-height: 20px; margin-top: 8px; font-size: 14px; line-height: 20px; }
+.quote-form__result--success { color: #067647; }
+.quote-form__result--error { color: #b42318; }
 
 .marketplaces { padding: 80px 0 48px; background: white; }
 .marketplaces h2, .process h2, .rates h2 { margin: 0; text-align: center; font-size: 48px; line-height: 62.4px; letter-spacing: -1px; font-weight: 500; }
@@ -354,7 +362,7 @@ footer { color: white; background: #07336b; }
   .news-card:hover h2,
   .article-card:hover h3 { color: #173a8d; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 
-  .quote-form button:hover { background: #c9221a; box-shadow: 0 4px 10px rgba(227, 37, 27, .28); transform: translateY(-1px); }
+  .quote-form button:hover:not(:disabled) { background: #c9221a; box-shadow: 0 4px 10px rgba(227, 37, 27, .28); transform: translateY(-1px); }
   .rate-grid a:hover,
   .rate-grid button:hover { color: #a71a0d; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
   .rate-grid a:hover img,
@@ -370,7 +378,7 @@ footer { color: white; background: #07336b; }
   .brand-copy { display: none; }
   .brand-divider { display: none; }
   .quote-form { width: min(833px, 100%); }
-  .quote-form > div { grid-template-columns: repeat(3, 1fr) 147px; }
+  .quote-form__grid { grid-template-columns: repeat(3, 1fr) 147px; }
   .about-grid { grid-template-columns: 34% 1fr; }
   .about-photo { width: 100%; }
   .rates-layout > img { width: 53%; }
@@ -427,7 +435,7 @@ footer { color: white; background: #07336b; }
   .hero h1 { font-size: clamp(39px, 8vw, 50px); }
   .hero-copy > p:last-child { font-size: 15px; max-width: 620px; }
   .quote-form { margin-top: 42px; }
-  .quote-form > div { grid-template-columns: 1fr 1fr; }
+  .quote-form__grid { grid-template-columns: 1fr 1fr; }
   .quote-form button { min-height: 48px; }
   .marketplaces { padding: 55px 0 35px; }
   .marketplaces h2, .process h2, .rates h2 { font-size: 29px; }
@@ -509,7 +517,7 @@ footer { color: white; background: #07336b; }
   .hero h1 { font-size: 37px; }
   .quote-form { padding: 18px; }
   .quote-form > strong { font-size: 16px; }
-  .quote-form > div { grid-template-columns: 1fr; gap: 8px; }
+  .quote-form__grid { grid-template-columns: 1fr; gap: 8px; }
   .marketplaces h2, .process h2, .rates h2 { font-size: 25px; }
   .market-item img { width: 56px; height: 56px; }
   .market-item { font-size: 13px; }

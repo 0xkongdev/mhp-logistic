@@ -6,6 +6,7 @@ import {
 import { type ReactNode, useEffect, useState } from 'react'
 
 import './App.css'
+import { QuoteForm } from './components/QuoteForm'
 
 type Locale = 'vi' | 'zh'
 
@@ -57,6 +58,8 @@ const chineseText: Record<string, string> = {
   'MHP LOGISTIC': 'MHP 物流', 'Vận chuyển nhanh chóng,': '快速运输，', 'thông minh hơn': '更智能',
   'MHP logistics cung cấp giải pháp vận chuyển quốc tế, khai báo hải quan và kho bãi thông minh. Chúng tôi giúp doanh nghiệp tối ưu hóa chuỗi cung ứng': 'MHP Logistics 提供国际运输、报关及智能仓储解决方案，帮助企业优化供应链。',
   'NHẬN TƯ VẤN & BÁO GIÁ NGAY': '立即获取咨询与报价', 'Họ và tên': '姓名', 'Số điện thoại': '电话号码', 'Nhu cầu nhập hàng': '采购需求', 'Đăng ký tư vấn': '预约咨询',
+  'Đang gửi...': '发送中...', 'Đăng ký thành công. MHP sẽ liên hệ với bạn sớm.': '登记成功。MHP 将尽快与您联系。', 'Không thể gửi đăng ký. Vui lòng thử lại.': '无法提交登记。请重试。',
+  'Vui lòng nhập họ và tên.': '请输入姓名。', 'Vui lòng nhập số điện thoại.': '请输入电话号码。', 'Vui lòng nhập nhu cầu nhập hàng.': '请输入采购需求。',
   'Order hàng các trang thương mại điện tử': '电商平台采购', 'Về chúng tôi': '关于我们', 'Vận chuyển và đặt': '运输与采购', 'hàng Trung': '中国货物',
   'Vận chuyển và đặt\nhàng Trung': '中国货物运输与采购', 'Các dịch vụ của\nchúng tôi': '我们的服务',
   'MHP cung cấp giải pháp vận chuyển quốc tế, khai báo hải quan và kho bãi thông minh. Chúng tôi giúp doanh nghiệp tối ưu hóa chuỗi cung ứng với chi phí thấp nhất và độ an toàn cao nhất.': 'MHP 提供国际运输、报关及智能仓储方案，帮助企业以更低成本和更高安全性优化供应链。',
@@ -661,15 +664,7 @@ function App() {
               <h1>Vận chuyển nhanh chóng,<br />thông minh hơn</h1>
               <p>MHP logistics cung cấp giải pháp vận chuyển quốc tế, khai báo hải quan và kho bãi thông minh. Chúng tôi giúp doanh nghiệp tối ưu hóa chuỗi cung ứng</p>
             </div>
-            <form className="quote-form" onSubmit={(event) => event.preventDefault()}>
-              <strong>NHẬN TƯ VẤN &amp; BÁO GIÁ NGAY</strong>
-              <div>
-                <input aria-label="Họ và tên" placeholder="Họ và tên" />
-                <input aria-label="Số điện thoại" placeholder="Số điện thoại" inputMode="tel" />
-                <input aria-label="Nhu cầu nhập hàng" placeholder="Nhu cầu nhập hàng" />
-                <button type="submit">Đăng ký tư vấn</button>
-              </div>
-            </form>
+            <QuoteForm locale={locale} />
           </div>
         </section>
 
