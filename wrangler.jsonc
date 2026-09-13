@@ -13,5 +13,15 @@
     "enabled": true,
     "head_sampling_rate": 1
   },
-  "upload_source_maps": true
+  "upload_source_maps": true,
+  "vars": {
+    "LEAD_EMAIL_FROM": "MHP Logistic <onboarding@resend.dev>"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mhp-logistic-leads",
+      "database_id": "a01c8424-aedb-4aba-874c-f6fe876041fc"
+    }
+  ]
 }
