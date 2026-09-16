@@ -1,7 +1,7 @@
 import { createD1LeadRepository, createResendNotifier } from './cloudflare-leads'
 import { handleCreateLead, type LeadNotifier } from './leads'
 
-const LEAD_EMAIL_RECIPIENT = '0xkong2610@gmail.com'
+const LEAD_EMAIL_RECIPIENT = 'mhplogistics@gmail.com'
 
 interface RuntimeEnv extends Env {
   RESEND_API_KEY: string

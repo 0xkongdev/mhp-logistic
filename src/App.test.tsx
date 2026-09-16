@@ -156,3 +156,36 @@ it('keeps the current header phone number when switching languages', async () =>
   await user.click(screen.getByRole('button', { name: localized.zh.switchLabel }))
   expect(phoneLink).toHaveAccessibleName('电话：0969857874')
 })
+
+it('translates the service page content and restores Vietnamese', async () => {
+  window.history.replaceState({}, '', '/dich-vu')
+  localStorage.setItem('mhp-logistic-locale', 'vi')
+  const user = userEvent.setup()
+  render(<App />)
+
+  expect(document.body).toHaveTextContent('Lựa chọn phương án phù hợp')
+  expect(document.body).toHaveTextContent('Ba giải pháp chính của MHP')
+  expect(document.body).toHaveTextContent('Tự xác định phương án phù hợp')
+  expect(document.body).toHaveTextContent('MHP đồng hành trong từng giai đoạn')
+  expect(document.body).toHaveTextContent('Kết nối Trung Quốc đến Hà Nội và TP.HCM')
+
+  await user.click(screen.getByRole('button', { name: localized.zh.switchLabel }))
+
+  expect(document.body).toHaveTextContent('运输与进口服务')
+  expect(document.body).toHaveTextContent('选择合适的方案')
+  expect(document.body).toHaveTextContent('MHP 的三大核心解决方案')
+  expect(document.body).toHaveTextContent('自行确定合适的方案')
+  expect(document.body).toHaveTextContent('部分服务实景图片')
+  expect(document.body).toHaveTextContent('MHP 全程陪伴每个阶段')
+  expect(document.body).toHaveTextContent('连接中国、河内与胡志明市')
+  expect(document.body).toHaveTextContent('运输路线')
+
+  await user.click(screen.getByRole('button', { name: localized.vi.switchLabel }))
+
+  expect(document.body).toHaveTextContent('Dịch vụ vận chuyển & nhập khẩu')
+  expect(document.body).toHaveTextContent('Lựa chọn phương án phù hợp')
+  expect(document.body).toHaveTextContent('Ba giải pháp chính của MHP')
+  expect(document.body).toHaveTextContent('Tự xác định phương án phù hợp')
+  expect(document.body).toHaveTextContent('MHP đồng hành trong từng giai đoạn')
+  expect(document.body).toHaveTextContent('Kết nối Trung Quốc đến Hà Nội và TP.HCM')
+})

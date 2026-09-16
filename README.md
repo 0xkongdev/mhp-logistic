@@ -35,8 +35,8 @@ See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rule
 
 The consultation form is served by the Cloudflare Worker. It stores each valid
 lead in the `DB` D1 binding and sends the notification through Resend. The
-Resend account used for the initial setup must be the account for
-`0xkong2610@gmail.com`; `onboarding@resend.dev` is only the initial sender.
+Resend account used for the initial setup must be allowed to send to
+`mhplogistics@gmail.com`; `onboarding@resend.dev` is only the initial sender.
 
 Set the Resend API key as a Cloudflare secret. Create the key in the Resend
 dashboard, then paste it only into Wrangler's hidden prompt. Do not put the
@@ -70,7 +70,7 @@ npm run deploy
 <onboarding@resend.dev>` in `wrangler.jsonc`. For production, verify a sending
 domain in Resend, replace that value with an address on the verified domain
 (for example, `MHP Logistic <leads@example.com>`), and deploy again. Keep the
-recipient as `0xkong2610@gmail.com` unless the Worker code is intentionally
+recipient as `mhplogistics@gmail.com` unless the Worker code is intentionally
 changed.
 
 Worker logs emit structured `lead_notification` events with a lead ID and an

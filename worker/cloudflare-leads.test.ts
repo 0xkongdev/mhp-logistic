@@ -242,7 +242,7 @@ describe('Worker routes', () => {
     expect(requests).toHaveLength(1)
     expect(JSON.parse(String(requests[0].init?.body))).toMatchObject({
       from: 'MHP Logistic <onboarding@resend.dev>',
-      to: ['0xkong2610@gmail.com'],
+      to: ['mhplogistics@gmail.com'],
     })
     expect(normalizeSql(statements[1].sql)).toContain("email_status = 'sent'")
     expect(statements[1].parameters[0]).toBe('email_123')

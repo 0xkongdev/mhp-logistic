@@ -81,6 +81,62 @@ const chineseText: Record<string, string> = {
   'Cẩm nang khách hàng': '客户指南', 'Những kiến thức, kinh nghiệm và hướng dẫn chi tiết giúp bạn tối ưu hóa quá trình nhập hàng và vận chuyển.': '实用知识、经验与详细指南，帮助您优化采购和运输流程。',
   'Những đơn vị giao hàng hóa uy tín và bảng giá giao hàng': '可靠货运单位与配送价格表', 'Các cách hiệu quả để đăng tin tuyển dụng trong năm 2026': '2026 年高效发布招聘信息的方法',
   'Vận chuyển hiệu quả từ 1-3 ngày và bảng giá vận chuyển': '1–3 天高效运输及运输价格表', 'Cách order hàng từ trung quốc qua các kênh vận chuyển': '如何通过运输渠道从中国采购商品',
+  'Dịch vụ vận chuyển & nhập khẩu': '运输与进口服务',
+  'hàng hóa Trung Quốc': '中国商品',
+  'Giải pháp vận chuyển và nhập khẩu hàng hóa từ Trung Quốc về Việt Nam, đồng hành cùng cá nhân, hộ kinh doanh và doanh nghiệp từ khâu đặt hàng đến khi nhận hàng.': '提供从中国到越南的货物运输与进口解决方案，从下单到收货，全程陪伴个人、个体经营户和企业客户。',
+  'Nhập khẩu chính ngạch': '正规贸易进口',
+  'Ủy thác nhập khẩu': '委托进口',
+  '24/7 Hỗ trợ khách hàng': '全天候客户支持',
+  'Lựa chọn phương án phù hợp': '选择合适的方案',
+  'Mỗi khách hàng có nhu cầu nhập hàng khác nhau. Có doanh nghiệp cần nhập khẩu chính ngạch với đầy đủ hồ sơ, có khách hàng cần một đơn vị hỗ trợ toàn bộ quá trình nhập khẩu, cũng có khách hàng chỉ cần một giải pháp vận chuyển hàng hóa từ Trung Quốc về Việt Nam.': '每位客户的进口需求各不相同。有的企业需要手续齐全的正规贸易进口，有的客户需要服务商协助整个进口流程，也有客户只需要从中国到越南的货物运输方案。',
+  'Vận chuyển chính nghạch': '正规贸易运输',
+  'Ba giải pháp chính của MHP': 'MHP 的三大核心解决方案',
+  'Giải pháp nhập khẩu hàng hóa từ Trung Quốc về Việt Nam theo hình thức chính ngạch, hỗ trợ khách hàng trong quá trình chuẩn bị hồ sơ, thực hiện thủ tục và vận chuyển hàng hóa.': '以正规贸易方式提供从中国到越南的货物进口方案，协助客户准备文件、办理手续并运输货物。',
+  'Hỗ trợ quy trình nhập khẩu': '协助进口流程',
+  'Tư vấn hồ sơ, chứng từ': '文件与单证咨询',
+  'Hỗ trợ thủ tục hải quan': '协助办理海关手续',
+  'Vận chuyển hàng hóa về Việt Nam': '将货物运输至越南',
+  'Phù hợp với nhu cầu nhập khẩu ổn định': '适合有稳定进口需求的客户',
+  'Tự xác định phương án phù hợp': '自行确定合适的方案',
+  'Chọn nhu cầu gần nhất với lô hàng của bạn, Hoa Việt sẽ tư vấn phạm vi dịch vụ và báo giá phù hợp.': '请选择最符合您货物情况的需求，Hoa Việt 将为您提供合适的服务范围和报价建议。',
+  'Doanh nghiệp cần nhập khẩu hàng hóa': '企业需要进口货物',
+  'Cần đơn vị hỗ trợ quá trình nhập khẩu': '需要服务商协助进口流程',
+  'Đã mua hàng và cần vận chuyển về Việt Nam': '已采购商品并需要运往越南',
+  'Ủy thác vận chuyển': '委托运输',
+  'Chưa chắc nên chọn dịch vụ nào': '尚未确定应选择哪项服务',
+  'Nhận tư vấn': '获取咨询',
+  'Một số hình ảnh về dịch vụ': '部分服务实景图片',
+  'MHP đồng hành trong từng giai đoạn': 'MHP 全程陪伴每个阶段',
+  'Hiểu đúng nhu cầu': '准确了解需求',
+  'Tìm hiểu nhu cầu và đặc điểm lô hàng để đưa ra phương án phù hợp.': '了解需求和货物特点，以制定合适的方案。',
+  'Quy trình rõ ràng': '流程清晰',
+  'Các bước thực hiện được trao đổi cụ thể trước khi triển khai.': '实施前会明确沟通各个执行步骤。',
+  'Cập nhật hành trình': '更新运输进度',
+  'Hỗ trợ cập nhật tình trạng lô hàng trong quá trình vận chuyển.': '运输过程中协助更新货物状态。',
+  'Hỗ trợ hồ sơ': '文件协助',
+  'Tư vấn các công việc liên quan đến hồ sơ trong phạm vi dịch vụ.': '在服务范围内提供文件相关事项咨询。',
+  'Đồng hành liên tục': '持续陪伴',
+  'Đồng hành từ khi tiếp nhận yêu cầu đến khi hoàn tất giao hàng.': '从接收需求到完成交货，全程提供支持。',
+  'Nhiều lựa chọn': '多种选择',
+  'Dịch vụ phù hợp với từng nhóm khách hàng và quy mô lô hàng.': '服务适配不同客户群体和货物规模。',
+  'Kết nối Trung Quốc đến Hà Nội và TP.HCM': '连接中国、河内与胡志明市',
+  'MHP Logistics kết nối các khâu tiếp nhận, tập kết, vận chuyển và giao nhận nhằm giúp khách hàng thuận tiện hơn trong quá trình nhập hàng.': 'MHP Logistics 串联收货、集货、运输和交付环节，让客户的进口过程更加便捷。',
+  'Doanh nghiệp': '企业',
+  'Nhập khẩu nguyên vật liệu, hàng hóa, sản phẩm phục vụ hoạt động kinh doanh.': '进口用于经营活动的原材料、货物和产品。',
+  'Hộ kinh doanh': '个体经营户',
+  'Nhập hàng Trung Quốc phục vụ bán buôn, bán lẻ và kinh doanh online.': '从中国进口商品，用于批发、零售和线上经营。',
+  'Shop online': '网店',
+  'Hỗ trợ vận chuyển hàng hóa từ nguồn hàng Trung Quốc về Việt Nam.': '协助将中国货源运输至越南。',
+  'Cá nhân': '个人',
+  'Giải pháp vận chuyển phù hợp với nhu cầu nhập hàng cá nhân.': '适合个人进口需求的运输方案。',
+  'Hành trình vận chuyển': '运输路线',
+  'TRUNG QUỐC': '中国',
+  'Kho / Tập kết': '仓库 / 集货',
+  'Vận chuyển': '运输',
+  'Cửa khẩu': '口岸',
+  'VIỆT NAM': '越南',
+  'Hà Nội / TP.HCM': '河内 / 胡志明市',
+  'Giao hàng': '交货',
   'Kết nối thế giới thông qua giải pháp vận tải thông minh, nhanh chóng và tin cậy': '通过智能、快速、可靠的运输方案连接世界',
   'Tầng 3, tòa PCC1, số 44 Triều Khúc, Phường Thanh Liệt, Hanoi, Vietnam, 100000': '越南河内市 Thanh Liệt 坊 Triều Khúc 路 44 号 PCC1 大厦 3 楼，100000',
   'THÔNG TIN & CHÍNH SÁCH': '信息与政策', 'Bảng giá dịch vụ': '服务报价表', 'Chính sách bảo mật': '隐私政策', 'Điều khoản sử dụng': '使用条款', 'Biểu phí dịch vụ': '服务收费表', 'Hướng dẫn đặt hàng': '订购指南', 'LIÊN HỆ HỖ TRỢ': '联系支持',
@@ -284,48 +340,160 @@ function Logo({ footer = false }: { footer?: boolean }) {
 
 const servicePageItems = [
   {
-    image: '/assets/service-page-road.png',
+    image: '/assets/service-option-road.png',
     alt: 'Xe tải container vận chuyển hàng hóa đường bộ',
-    title: 'Vận Tải Đường Bộ',
-    text: 'Giải pháp vận tải đường bộ đáng tin cậy, đảm bảo giao hàng an toàn, đúng hẹn và tiết kiệm chi phí.',
+    title: 'Vận chuyển chính nghạch',
+    text: 'Quy trình vận chuyển từ Trung Quốc về Việt Nam, chuyên nghiệp, minh bạch và an toàn',
   },
   {
-    image: '/assets/service-page-sea.png',
+    image: '/assets/service-option-sea.png',
     alt: 'Tàu container vận chuyển hàng hóa đường biển',
-    title: 'Vận Tải Đường Biển',
-    text: 'Giải pháp vận tải đường biển đáng tin cậy, đảm bảo vận chuyển hàng hóa toàn cầu an toàn và hiệu quả.',
+    title: 'Vận chuyển chính nghạch',
+    text: 'Quy trình vận chuyển từ Trung Quốc về Việt Nam, chuyên nghiệp, minh bạch và an toàn',
   },
   {
-    image: '/assets/service-page-air.png',
+    image: '/assets/service-option-air.png',
     alt: 'Máy bay vận chuyển hàng hóa quốc tế',
-    title: 'Vận Tải Hàng Không',
-    text: 'Dịch vụ vận tải hàng không nhanh chóng cho các lô hàng nhạy cảm về thời gian và yêu cầu giao hàng khẩn cấp.',
+    title: 'Vận chuyển chính nghạch',
+    text: 'Quy trình vận chuyển từ Trung Quốc về Việt Nam, chuyên nghiệp, minh bạch và an toàn',
   },
+]
+
+const serviceSolutions = [
+  {
+    image: '/assets/service-solution-1.png',
+    title: 'Nhập khẩu chính ngạch',
+    text: 'Giải pháp nhập khẩu hàng hóa từ Trung Quốc về Việt Nam theo hình thức chính ngạch, hỗ trợ khách hàng trong quá trình chuẩn bị hồ sơ, thực hiện thủ tục và vận chuyển hàng hóa.',
+    features: ['Hỗ trợ quy trình nhập khẩu', 'Tư vấn hồ sơ, chứng từ', 'Hỗ trợ thủ tục hải quan', 'Vận chuyển hàng hóa về Việt Nam', 'Phù hợp với nhu cầu nhập khẩu ổn định'],
+  },
+  {
+    image: '/assets/service-solution-2.png',
+    title: 'Nhập khẩu chính ngạch',
+    text: 'Giải pháp nhập khẩu hàng hóa từ Trung Quốc về Việt Nam theo hình thức chính ngạch, hỗ trợ khách hàng trong quá trình chuẩn bị hồ sơ, thực hiện thủ tục và vận chuyển hàng hóa.',
+    features: ['Hỗ trợ quy trình nhập khẩu', 'Tư vấn hồ sơ, chứng từ', 'Hỗ trợ thủ tục hải quan', 'Vận chuyển hàng hóa về Việt Nam', 'Phù hợp với nhu cầu nhập khẩu ổn định'],
+  },
+  {
+    image: '/assets/service-solution-3.png',
+    title: 'Nhập khẩu chính ngạch',
+    text: 'Giải pháp nhập khẩu hàng hóa từ Trung Quốc về Việt Nam theo hình thức chính ngạch, hỗ trợ khách hàng trong quá trình chuẩn bị hồ sơ, thực hiện thủ tục và vận chuyển hàng hóa.',
+    features: ['Hỗ trợ quy trình nhập khẩu', 'Tư vấn hồ sơ, chứng từ', 'Hỗ trợ thủ tục hải quan', 'Vận chuyển hàng hóa về Việt Nam', 'Phù hợp với nhu cầu nhập khẩu ổn định'],
+  },
+]
+
+const serviceStages = [
+  ['🎯', 'Hiểu đúng nhu cầu', 'Tìm hiểu nhu cầu và đặc điểm lô hàng để đưa ra phương án phù hợp.'],
+  ['📋', 'Quy trình rõ ràng', 'Các bước thực hiện được trao đổi cụ thể trước khi triển khai.'],
+  ['📍', 'Cập nhật hành trình', 'Hỗ trợ cập nhật tình trạng lô hàng trong quá trình vận chuyển.'],
+  ['📄', 'Hỗ trợ hồ sơ', 'Tư vấn các công việc liên quan đến hồ sơ trong phạm vi dịch vụ.'],
+  ['🤝', 'Đồng hành liên tục', 'Đồng hành từ khi tiếp nhận yêu cầu đến khi hoàn tất giao hàng.'],
+  ['⚡', 'Nhiều lựa chọn', 'Dịch vụ phù hợp với từng nhóm khách hàng và quy mô lô hàng.'],
 ]
 
 function ServicePage() {
   return (
-    <main className="service-page">
-      <div className="service-page-inner">
-        <div className="service-page-heading">
-          <p>Giải pháp toàn diện</p>
-          <h1>DỊCH VỤ CỦA <span>CHÚNG TÔI</span></h1>
-          <small>Giải pháp Logistic toàn diện cho doanh nghiệp xuất nhập khẩu</small>
+    <main className="service-detail-page">
+      <section className="service-detail-hero">
+        <div className="service-detail-hero__shade" />
+        <div className="shell service-detail-hero__content">
+          <h1>Dịch vụ vận chuyển &amp; nhập khẩu<br />hàng hóa Trung Quốc</h1>
+          <p>Giải pháp vận chuyển và nhập khẩu hàng hóa từ Trung Quốc về Việt Nam, đồng hành cùng cá nhân, hộ kinh doanh và doanh nghiệp từ khâu đặt hàng đến khi nhận hàng.</p>
+          <div className="service-detail-hero__tags">
+            <span>Nhập khẩu chính ngạch</span>
+            <span>Ủy thác nhập khẩu</span>
+            <span>24/7 Hỗ trợ khách hàng</span>
+          </div>
         </div>
+      </section>
 
-        <div className="service-page-list">
+      <section className="service-detail-options">
+        <div className="service-detail-shell">
+          <header className="service-detail-heading">
+            <h2>Lựa chọn phương án phù hợp</h2>
+            <p>Mỗi khách hàng có nhu cầu nhập hàng khác nhau. Có doanh nghiệp cần nhập khẩu chính ngạch với đầy đủ hồ sơ, có khách hàng cần một đơn vị hỗ trợ toàn bộ quá trình nhập khẩu, cũng có khách hàng chỉ cần một giải pháp vận chuyển hàng hóa từ Trung Quốc về Việt Nam.</p>
+          </header>
+          <div className="service-detail-options__grid">
           {servicePageItems.map((item) => (
-            <a className="service-page-item" href="/dich-vu" key={item.image}>
-              <span className="service-page-item-media"><img src={item.image} alt={item.alt} /></span>
-              <div>
+            <article className="service-detail-option" key={item.image}>
+              <img src={item.image} alt={item.alt} />
+              <div className="service-detail-option__body">
                 <h2>{item.title}</h2>
                 <p>{item.text}</p>
-                <span className="service-page-item-link">Xem chi tiết <ArrowRight /></span>
+                <a href="#service-solutions">Xem chi tiết <ArrowRight /></a>
               </div>
-            </a>
+            </article>
           ))}
+          </div>
         </div>
-      </div>
+      </section>
+
+      <section className="service-detail-solutions" id="service-solutions">
+        <div className="service-detail-shell">
+          <header className="service-detail-heading">
+            <h2>Ba giải pháp chính của MHP</h2>
+            <p>Mỗi khách hàng có nhu cầu nhập hàng khác nhau. Có doanh nghiệp cần nhập khẩu chính ngạch với đầy đủ hồ sơ, có khách hàng cần một đơn vị hỗ trợ toàn bộ quá trình nhập khẩu, cũng có khách hàng chỉ cần một giải pháp vận chuyển hàng hóa từ Trung Quốc về Việt Nam.</p>
+          </header>
+          <div className="service-detail-solutions__list">
+            {serviceSolutions.map((solution, index) => (
+              <article className={index % 2 ? 'reverse' : ''} key={solution.image}>
+                <img src={solution.image} alt={`Dịch vụ ${solution.title}`} />
+                <div>
+                  <h3>{solution.title}</h3>
+                  <p>{solution.text}</p>
+                  <ul>{solution.features.map((feature) => <li key={feature}><span>✓</span>{feature}</li>)}</ul>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="service-detail-selector">
+        <div className="service-detail-shell">
+          <header>
+            <h2>Tự xác định phương án phù hợp</h2>
+            <p>Chọn nhu cầu gần nhất với lô hàng của bạn, Hoa Việt sẽ tư vấn phạm vi dịch vụ và báo giá phù hợp.</p>
+          </header>
+          <div className="service-detail-selector__grid">
+            <a href="tel:0969857874"><small>Doanh nghiệp cần nhập khẩu hàng hóa</small><strong>Nhập khẩu chính ngạch</strong></a>
+            <a href="tel:0969857874"><small>Cần đơn vị hỗ trợ quá trình nhập khẩu</small><strong>Ủy thác nhập khẩu</strong></a>
+            <a href="tel:0969857874"><small>Đã mua hàng và cần vận chuyển về Việt Nam</small><strong>Ủy thác vận chuyển</strong></a>
+            <a href="tel:0969857874"><small>Chưa chắc nên chọn dịch vụ nào</small><strong>Nhận tư vấn</strong></a>
+          </div>
+        </div>
+      </section>
+
+      <section className="service-detail-gallery">
+        <div className="service-detail-shell">
+          <h2>Một số hình ảnh về dịch vụ</h2>
+          <div>{[1, 2, 3, 4, 5, 6].map((number) => <img key={number} src={`/assets/service-gallery-${number}.png`} alt={`Hoạt động vận chuyển MHP ${number}`} />)}</div>
+        </div>
+      </section>
+
+      <section className="service-detail-stages">
+        <div className="service-detail-shell">
+          <h2>MHP đồng hành trong từng giai đoạn</h2>
+          <div>{serviceStages.map(([icon, title, text]) => <article key={title}><span>{icon}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
+        </div>
+      </section>
+
+      <section className="service-detail-route">
+        <div className="service-detail-shell service-detail-route__grid">
+          <div className="service-detail-route__intro">
+            <h2>Kết nối Trung Quốc đến Hà Nội và TP.HCM</h2>
+            <p>MHP Logistics kết nối các khâu tiếp nhận, tập kết, vận chuyển và giao nhận nhằm giúp khách hàng thuận tiện hơn trong quá trình nhập hàng.</p>
+            <div>
+              <article><h3>Doanh nghiệp</h3><p>Nhập khẩu nguyên vật liệu, hàng hóa, sản phẩm phục vụ hoạt động kinh doanh.</p></article>
+              <article><h3>Hộ kinh doanh</h3><p>Nhập hàng Trung Quốc phục vụ bán buôn, bán lẻ và kinh doanh online.</p></article>
+              <article><h3>Shop online</h3><p>Hỗ trợ vận chuyển hàng hóa từ nguồn hàng Trung Quốc về Việt Nam.</p></article>
+              <article><h3>Cá nhân</h3><p>Giải pháp vận chuyển phù hợp với nhu cầu nhập hàng cá nhân.</p></article>
+            </div>
+          </div>
+          <div className="service-detail-route__journey">
+            <h3>Hành trình vận chuyển</h3>
+            <ol>{['TRUNG QUỐC', 'Kho / Tập kết', 'Vận chuyển', 'Cửa khẩu', 'VIỆT NAM', 'Hà Nội / TP.HCM', 'Giao hàng'].map((item, index) => <li key={item}><span>{index + 1}</span>{item}</li>)}</ol>
+          </div>
+        </div>
+      </section>
     </main>
   )
 }
@@ -658,7 +826,7 @@ function App() {
         </div>
       </header>
 
-      {isPolicyPage ? <PolicyPage /> : isIntroductionPage ? <ServicePage /> : isServicePage || isPricePage ? <PricePage /> : isNewsDetailPage ? <NewsDetailPage /> : isNewsPage ? <NewsPage /> : <main>
+      {isPolicyPage ? <PolicyPage /> : isIntroductionPage || isServicePage ? <ServicePage /> : isPricePage ? <PricePage /> : isNewsDetailPage ? <NewsDetailPage /> : isNewsPage ? <NewsPage /> : <main>
         <section className="hero">
           <div className="shell hero-content">
             <div className="hero-copy">
