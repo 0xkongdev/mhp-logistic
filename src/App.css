@@ -163,35 +163,64 @@ button:not(:disabled):focus-visible {
 .service-detail-route__journey li:not(:last-child)::after { content: ''; position: absolute; top: 48px; bottom: 8px; left: 19px; width: 2px; background: #e2e8f0; }
 .service-detail-route__journey li span { width: 40px; height: 40px; display: grid; place-items: center; flex: 0 0 40px; border-radius: 50%; color: #fff; background: #012c64; line-height: 20px; }
 
-.pricing-page { min-height: 1380px; background: linear-gradient(110deg, #f5f6ff 0%, #fff 48%, #f7f8ff 100%); }
-.pricing-hero { height: 230px; padding: 50px 24px 36px; text-align: center; }
-.pricing-hero p { margin: 0 0 14px; color: #697586; font-size: 12px; line-height: 16px; }
-.pricing-hero h1 { margin: 0; color: #10182b; font-size: 46px; line-height: 1.2; letter-spacing: -.045em; font-weight: 650; }
-.pricing-hero h1 span { color: #2e4a8a; }
-.pricing-hero small { display: block; margin-top: 18px; color: #687385; font-size: 12px; line-height: 16px; }
-.pricing-content { padding: 26px 0 58px; }
-.pricing-section { margin: 0 0 40px; }
-.pricing-section h2 { margin: 0 0 8px; color: #24272e; font-size: 23px; line-height: 1.35; font-weight: 650; letter-spacing: -.025em; }
-.pricing-section > p { margin: 0 0 16px; color: #5e6673; font-size: 13px; line-height: 18px; }
-.pricing-table { width: 100%; overflow: hidden; border: 1px solid #dce1eb; border-spacing: 0; border-radius: 7px; border-collapse: separate; color: #4e5663; font-size: 14px; text-align: left; }
-.pricing-table th { height: 42px; padding: 10px 15px; border-right: 1px solid #bac5e0; color: white; background: #314f90; font-size: 13px; line-height: 18px; font-weight: 600; }
-.pricing-table th:last-child { border-right: 0; }
-.pricing-table td { height: 42px; padding: 10px 15px; border-top: 1px solid #dce1eb; border-right: 1px solid #dce1eb; line-height: 18px; font-weight: 500; }
-.pricing-table td:last-child { border-right: 0; }
-.pricing-table tbody tr:nth-child(even) td { background: rgba(242, 244, 248, .72); }
-.pricing-table--two th { text-align: center; }
+/* Pricing tables follow the Figma frame; the detailed matrix scrolls on small screens. */
+.pricing-page { background: #fafafa; }
+.pricing-hero { padding: 64px 24px 48px; text-align: center; }
+.pricing-hero p { margin: 0 0 16px; color: #334156; font-size: 12px; line-height: 14px; }
+.pricing-hero h1 { margin: 0; color: #0f182d; font-size: 48px; line-height: 64px; font-weight: 600; }
+.pricing-hero h1 span { color: var(--royal); }
+.pricing-hero small { display: block; margin-top: 16px; color: #334156; font-size: 12px; line-height: 14px; }
+.pricing-body { position: relative; isolation: isolate; }
+.pricing-glows { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.pricing-glows > div { position: absolute; width: 239px; height: 239px; }
+.pricing-glows > div:nth-child(1) { left: calc(50% + 587px); top: -24px; }
+.pricing-glows > div:nth-child(2) { left: calc(50% - 840px); top: -80px; }
+.pricing-glows > div:nth-child(3) { left: calc(50% + 587px); top: 840px; }
+.pricing-glows > div:nth-child(4) { left: calc(50% - 840px); top: 657px; }
+.pricing-glows img { position: absolute; left: -500px; top: -500px; max-width: none; }
+.pricing-content { position: relative; display: flex; flex-direction: column; gap: 40px; padding: 32px 0 64px; }
+.pricing-section { min-width: 0; width: 100%; }
+.pricing-section h2 { margin: 0 0 8px; color: #1a1a1a; font-size: 24px; line-height: 36px; font-weight: 600; }
+.pricing-section > p { margin: 0 0 16px; color: #1a1a1a; font-size: 14px; line-height: 20px; }
+.pricing-table { width: 100%; overflow: hidden; border: 1px solid #e2e8f1; border-spacing: 0; border-radius: 8px; border-collapse: separate; color: #333; background: white; font-size: 14px; text-align: left; }
+.pricing-table th { height: 44px; padding: 12px 16px; color: white; background: #2e4a8a; line-height: 17px; font-weight: 600; }
+.pricing-table td { height: 44px; padding: 12px 16px; line-height: 17px; font-weight: 400; }
+.pricing-table tbody tr:nth-child(even) td { background: #f5f5fa; }
+.pricing-table--two { border-color: #d1dde2; color: #4a5568; }
+.pricing-table--two th { height: 50px; padding: 16px; font-size: 15px; line-height: 18px; text-align: center; }
 .pricing-table--two th:first-child { width: 80%; }
-.pricing-table--shipping { table-layout: fixed; text-align: center; font-size: 13px; }
-.pricing-table--shipping th { height: 50px; padding: 8px 3px; border-color: #bdc7df; text-align: center; text-transform: uppercase; }
-.pricing-table--shipping thead tr:first-child th { height: 64px; font-size: 14px; }
-.pricing-table--shipping thead small { display: inline-block; margin-top: 3px; color: #e7ebf4; font-size: 12px; font-weight: 400; text-transform: none; }
-.pricing-table--shipping td { height: 44px; padding: 8px 4px; border-top: 1px solid #e4e7ed; font-size: 14px; font-weight: 600; text-align: center; }
-.pricing-table--shipping col { width: 8%; }
-.pricing-table--shipping .pricing-table__origin,
-.pricing-table--shipping .pricing-table__destination { width: 12.5%; }
-.pricing-table--shipping .pricing-table__cosmetic { width: 9.5%; }
-.pricing-table--shipping .pricing-table__parcel { width: 7.5%; }
-.pricing-table__red { color: #f04d40; font-weight: 700 !important; }
+.pricing-table--two th:first-child, .pricing-table--two td:first-child { border-right: 1px solid #d1dde2; }
+.pricing-table--two td { height: 49px; padding: 16px; }
+.pricing-table--two td:last-child { text-align: center; font-weight: 500; }
+.pricing-table--two tbody tr:nth-child(even) td { background: #fafafa; border-top: 1px solid #d1dde2; }
+.pricing-table--destinations { table-layout: fixed; }
+.pricing-table--destinations th:not(:first-child), .pricing-table--destinations td:not(:first-child) { text-align: center; }
+.pricing-table--destinations a:hover { color: var(--royal); text-decoration: underline; }
+.pricing-table--extra-heavy { color: #444; font-size: 13px; }
+.pricing-table--extra-heavy th { height: 40px; padding: 12px 20px; background: #3b4b8c; line-height: 16px; }
+.pricing-table--extra-heavy td { height: 41px; padding: 12px 20px; border-top: 1px solid #e0e4eb; line-height: 16px; }
+.pricing-table--extra-heavy tbody tr:nth-child(even) td { background: #f5f7fa; }
+.pricing-table-scroll { overflow-x: auto; border-radius: 8px; scrollbar-color: #8b9abb transparent; }
+.pricing-table-scroll:focus-visible { outline: 3px solid #0b66c3; outline-offset: 3px; }
+.pricing-table--shipping { min-width: 1200px; table-layout: fixed; color: #1f2937; }
+.pricing-table--shipping th { height: 57px; padding: 8px 16px; border-right: .8px solid #ffdede; background: #3b4b8c; font-size: 14px; line-height: 20px; font-weight: 500; text-align: center; }
+.pricing-table--shipping thead tr:first-child th { height: 73px; font-size: 16px; line-height: 24px; }
+.pricing-table--shipping thead tr:first-child th:not(:last-child) { text-transform: uppercase; }
+.pricing-table--shipping thead tr:first-child th[colspan], .pricing-table--shipping thead tr:first-child th:last-child { border-bottom: .8px solid #ffdede; }
+.pricing-table--shipping thead small { color: white; font-size: 14px; line-height: 20px; font-weight: 400; text-transform: none; }
+.pricing-table--shipping td { height: 49px; padding: 12px 8px; border-top: .8px solid #f3f4f6; border-right: .8px solid #f3f4f6; font-size: 16px; line-height: 24px; font-weight: 500; text-align: center; }
+.pricing-table--shipping tbody tr:nth-child(even) td { background: white; }
+.pricing-table--shipping th:last-child, .pricing-table--shipping td:last-child { border-right: 0; }
+.pricing-table--shipping .pricing-table__origin { width: 150px; }
+.pricing-table--shipping .pricing-table__destination { width: 149px; }
+.pricing-table--shipping .pricing-table__kg { width: 85px; }
+.pricing-table--shipping .pricing-table__volume { width: 120px; }
+.pricing-table--shipping .pricing-table__density-low { width: 158px; }
+.pricing-table--shipping .pricing-table__density-mid { width: 173px; }
+.pricing-table--shipping .pricing-table__density-high { width: 114px; }
+.pricing-table--shipping .pricing-table__chemical { width: 249px; }
+.pricing-table__red { color: #d93025; }
+.pricing-table__chemical-price { color: #ff4d00; }
 
 .policy-page { background: #f4f5ff; }
 .policy-hero { height: 238px; padding: 64px 24px 48px; text-align: center; background: #f4f5ff; }
@@ -598,9 +627,7 @@ footer { color: white; background: #07336b; }
   .service-detail-selector__grid a { min-height: 110px; }
   .service-detail-route__intro > div { grid-template-columns: 1fr; }
   .pricing-content { width: min(680px, calc(100% - 32px)); }
-  .pricing-section { overflow-x: auto; padding-bottom: 4px; scrollbar-color: #8b9abb transparent; }
   .pricing-section h2 { font-size: 21px; }
-  .pricing-table--shipping { min-width: 980px; }
 }
 
 @media (max-width: 520px) {
@@ -626,14 +653,15 @@ footer { color: white; background: #07336b; }
   .service-detail-stages article { min-height: 150px; }
   .service-detail-route__intro article { min-height: auto; }
   .service-detail-route__journey { padding: 24px 20px; }
-  .pricing-hero { height: auto; min-height: 210px; padding-top: 46px; }
-  .pricing-content { padding-top: 20px; }
-  .pricing-section { margin-bottom: 32px; }
-  .pricing-table { min-width: 0; font-size: 12px; }
-  .pricing-table th, .pricing-table td { padding: 9px 10px; font-size: 12px; }
-  .pricing-table th { line-height: 16px; }
-  .pricing-table--two th:first-child { width: auto; }
-  .pricing-table--shipping { min-width: 980px; }
+  .pricing-hero { padding: 46px 16px 36px; }
+  .pricing-hero h1 { line-height: 1.3; }
+  .pricing-hero small { line-height: 18px; }
+  .pricing-content { padding-top: 20px; gap: 32px; }
+  .pricing-section h2 { line-height: 30px; }
+  .pricing-table:not(.pricing-table--shipping) { font-size: 12px; }
+  .pricing-table:not(.pricing-table--shipping) th, .pricing-table:not(.pricing-table--shipping) td { padding: 9px 10px; font-size: 12px; overflow-wrap: anywhere; }
+  .pricing-table:not(.pricing-table--shipping) th { line-height: 16px; }
+  .pricing-table--two th:first-child { width: 70%; }
   .news-page-hero { min-height: 210px; padding: 44px 16px 36px; }
   .news-page-hero h1 { font-size: 32px; }
   .news-page-hero span { line-height: 1.5; }

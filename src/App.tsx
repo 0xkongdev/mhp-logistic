@@ -45,6 +45,16 @@ const chineseText: Record<string, string> = {
   'Phí ủy thác được tính dựa trên tổng giá trị đơn hàng.': '委托费用根据订单总价值计算。',
   'Giá trị ủy thác': '委托金额', 'Phí': '费用', 'Trọng lượng': '重量', 'Hà Nội': '河内', 'TP.HCM': '胡志明市',
   'Bảng giá vận chuyển đối với hàng nặng': '重货运输价格表', 'Bảng giá vận chuyển đối với hàng siêu nặng': '超重货物运输价格表',
+  'Bảng giá vận chuyển hàng Trung Quốc về Hà Nội và TP.HCM (phí ủy thác nhập khẩu)': '中国至河内和胡志明市的运输价格表（进口委托费）',
+  'Bảng giá vận chuyển nguyên xe': '整车运输价格表', 'Bảng giá vận chuyển nguyên CONT': '整柜运输价格表',
+  'TPHCM': '胡志明市', 'Hóa chất': '化学品', '(Sắt thép, ốc vít, bản lề...)': '（钢铁、螺丝、铰链等）',
+  'Dưới 30 triệu đồng': '低于 3000 万越南盾', 'Từ 30 triệu đến 200 triệu đồng': '3000 万至 2 亿越南盾',
+  'Trên 200 triệu - 500 triệu đồng': '超过 2 亿至 5 亿越南盾', 'Trên 500 triệu': '超过 5 亿越南盾',
+  'Trên 5000 kg': '超过 5000 公斤', '3000 - 5000 kg': '3000–5000 公斤', '200kg – 3000kg': '200–3000 公斤',
+  '1.000kg – 2.000kg': '1000–2000 公斤',
+  'Đầu kéo 13m (80-95m3)': '13 米牵引车（80–95 立方米）', 'Đầu kéo 17m (140-165m3)': '17 米牵引车（140–165 立方米）',
+  'Nguyên cont 20ft (30-33m3)': '20 英尺整柜（30–33 立方米）', 'Nguyên cont 40ft (60-65m3)': '40 英尺整柜（60–65 立方米）',
+  'Bảng cước chi tiết': '详细运费表',
   'Điểm nhận': '收货点', 'kho TQ': '中国仓库', 'kho VN': '越南仓库', 'Hàng phổ thông': '普通货物', 'Hàng nặng': '重货',
   'Mỹ phẩm, quần áo': '化妆品、服装', 'Bao tạp': '杂货包裹', 'LIÊN HỆ': '联系我们',
   'CHÍNH SÁCH & QUY ĐỊNH': '政策与规定', 'Điều khoản & dịch vụ hàng hóa cấm': '禁运货物条款与服务',
@@ -499,17 +509,28 @@ function ServicePage() {
 }
 
 const entrustedRates = [
-  ['Dưới 100 triệu đồng', '2%'],
-  ['Từ 100 triệu đến 200 triệu đồng', '1.5%'],
-  ['Trên 200 triệu đồng', '1%'],
+  ['Dưới 30 triệu đồng', '500,000 đ'],
+  ['Từ 30 triệu đến 200 triệu đồng', '2%'],
+  ['Trên 200 triệu - 500 triệu đồng', '1.5%'],
+  ['Trên 500 triệu', '1%'],
 ]
 
 const heavyRates = [
-  ['50kg – 150kg', '8.000đ/kg', '10.000đ/kg'],
-  ['150kg – 500kg', '7.000đ/kg', '9.000đ/kg'],
-  ['500kg – 1.000kg', '6.000đ/kg', '8.000đ/kg'],
-  ['1.000kg – 3.000kg', '5.500đ/kg', '7.500đ/kg'],
-  ['Trên 3.000kg', 'Liên hệ', 'Liên hệ'],
+  ['Trên 5000 kg', 'Liên hệ', 'Liên hệ'],
+  ['3000 - 5000 kg', '5.000đ/kg', '10.000đ/kg'],
+  ['200kg – 3000kg', '6.000đ/kg', '11.000đ/kg'],
+  ['1.000kg – 2.000kg', '7.000đ/kg', '12.000đ/kg'],
+  ['Dưới 1000kg', '8.000đ/kg', '13.000đ/kg'],
+]
+
+const fullTruckRates = [
+  ['Đầu kéo 13m (80-95m3)', 'Liên hệ', 'Liên hệ'],
+  ['Đầu kéo 17m (140-165m3)', 'Liên hệ', 'Liên hệ'],
+]
+
+const containerRates = [
+  ['Nguyên cont 20ft (30-33m3)', 'Liên hệ', 'Liên hệ'],
+  ['Nguyên cont 40ft (60-65m3)', 'Liên hệ', 'Liên hệ'],
 ]
 
 const extraHeavyRates = [
@@ -537,48 +558,55 @@ function PricePage() {
         <small>XEM BẢNG GIÁ VÀ CÁC GÓI DỊCH VỤ CỦA CHÚNG TÔI</small>
       </section>
 
-      <div className="shell pricing-content">
-        <PriceSection title="Bảng giá vận chuyển hàng Trung Quốc về Hà Nội và TP.HCM">
-          <table className="pricing-table pricing-table--two">
-            <thead><tr><th>Giá trị ủy thác</th><th>Phí</th></tr></thead>
-            <tbody>{entrustedRates.map(([value, fee]) => <tr key={value}><td>{value}</td><td>{fee}</td></tr>)}</tbody>
-          </table>
-        </PriceSection>
+      <div className="pricing-body">
+        <div className="pricing-glows" aria-hidden="true">
+          {[0, 1, 2, 3].map((index) => <div key={index}><img src="/assets/pricing-glow.svg" alt="" width={1239} height={1239} /></div>)}
+        </div>
+        <div className="shell pricing-content">
+          <PriceSection title="Bảng giá vận chuyển hàng Trung Quốc về Hà Nội và TP.HCM (phí ủy thác nhập khẩu)">
+            <table className="pricing-table pricing-table--two">
+              <thead><tr><th scope="col">Giá trị ủy thác</th><th scope="col">Phí</th></tr></thead>
+              <tbody>{entrustedRates.map(([value, fee]) => <tr key={value}><td>{value}</td><td>{fee}</td></tr>)}</tbody>
+            </table>
+          </PriceSection>
 
-        <PriceSection title="Bảng giá vận chuyển đối với hàng nặng">
-          <table className="pricing-table">
-            <thead><tr><th>Trọng lượng</th><th>Hà Nội</th><th>TP.HCM</th></tr></thead>
-            <tbody>{heavyRates.map(([weight, hanoi, hcm]) => <tr key={weight}><td>{weight}</td><td>{hanoi}</td><td>{hcm}</td></tr>)}</tbody>
-          </table>
-        </PriceSection>
+          <PriceSection title="Bảng giá hàng nặng"><DestinationPriceTable rates={heavyRates} /></PriceSection>
+          <PriceSection title="Bảng giá vận chuyển nguyên xe"><DestinationPriceTable rates={fullTruckRates} /></PriceSection>
+          <PriceSection title="Bảng giá vận chuyển nguyên CONT"><DestinationPriceTable rates={containerRates} /></PriceSection>
+          <PriceSection title="Bảng giá vận chuyển đối với hàng siêu nặng"><DestinationPriceTable rates={extraHeavyRates} extraHeavy /></PriceSection>
 
-        <PriceSection title="Bảng giá vận chuyển đối với hàng siêu nặng">
-          <table className="pricing-table">
-            <thead><tr><th>Trọng lượng</th><th>Hà Nội</th><th>TP.HCM</th></tr></thead>
-            <tbody>{extraHeavyRates.map(([weight, hanoi, hcm]) => <tr key={weight}><td>{weight}</td><td>{hanoi}</td><td>{hcm}</td></tr>)}</tbody>
-          </table>
-        </PriceSection>
-
-        <PriceSection title="Bảng giá vận chuyển đối với hàng siêu nặng">
-          <table className="pricing-table pricing-table--shipping">
-            <colgroup>
-              <col className="pricing-table__origin" /><col className="pricing-table__destination" />
-              <col /><col /><col /><col /><col />
-              <col className="pricing-table__cosmetic" /><col className="pricing-table__cosmetic" />
-              <col className="pricing-table__parcel" /><col className="pricing-table__parcel" />
-            </colgroup>
-            <thead>
-              <tr><th rowSpan={2}>Điểm nhận<br />kho TQ</th><th rowSpan={2}>Điểm nhận<br />kho VN</th><th colSpan={2}>Hàng phổ thông</th><th colSpan={3}>Hàng nặng<br /><small>(Sắt thép, ốc vít, bàn lề...)</small></th><th colSpan={2}>Mỹ phẩm, quần áo</th><th colSpan={2}>Bao tạp</th></tr>
-              <tr><th>kg</th><th>m3</th><th>700-1000<br />kg/m3</th><th>1000-1500<br />kg/m3</th><th>&gt;1500<br />kg/m3</th><th>kg</th><th>m3</th><th>kg</th><th>m3</th></tr>
-            </thead>
-            <tbody>
-              <tr><td rowSpan={2} className="pricing-table__red">BẰNG TƯỜNG</td><td>HÀ NỘI</td><td className="pricing-table__red">6.000</td><td className="pricing-table__red">1.600.000</td><td>4.000</td><td>3.000</td><td>2.500</td><td className="pricing-table__red">6.000</td><td className="pricing-table__red">2.100.000</td><td>10.000</td><td>2.000.000</td></tr>
-              <tr><td>TP.HCM</td><td className="pricing-table__red">8.000</td><td className="pricing-table__red">2.100.000</td><td>6.000</td><td>5.000</td><td>4.500</td><td className="pricing-table__red">8.000</td><td className="pricing-table__red">2.600.000</td><td>12.000</td><td>2.500.000</td></tr>
-            </tbody>
-          </table>
-        </PriceSection>
+          <PriceSection title="Bảng giá vận chuyển đối với hàng siêu nặng">
+            <div className="pricing-table-scroll" role="region" aria-label="Bảng cước chi tiết" tabIndex={0}>
+              <table className="pricing-table pricing-table--shipping">
+                <colgroup>
+                  <col className="pricing-table__origin" /><col className="pricing-table__destination" />
+                  <col className="pricing-table__kg" /><col className="pricing-table__volume" />
+                  <col className="pricing-table__density-low" /><col className="pricing-table__density-mid" /><col className="pricing-table__density-high" />
+                  <col className="pricing-table__chemical" />
+                </colgroup>
+                <thead>
+                  <tr><th rowSpan={2} scope="col">Điểm nhận<br />kho TQ</th><th rowSpan={2} scope="col">Điểm nhận<br />kho VN</th><th colSpan={2} scope="colgroup">Hàng phổ thông</th><th colSpan={3} scope="colgroup">Hàng nặng<br /><small>(Sắt thép, ốc vít, bản lề...)</small></th><th scope="col">Hóa chất</th></tr>
+                  <tr><th scope="col">kg</th><th scope="col">m3</th><th scope="col">700-1000<br />kg/m3</th><th scope="col">1000-1500<br />kg/m3</th><th scope="col">&gt;1500<br />kg/m3</th><th scope="col">kg</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td rowSpan={2} className="pricing-table__red">BẰNG TƯỜNG</td><td>HÀ NỘI</td><td className="pricing-table__red">8.000</td><td className="pricing-table__red">1.800.000</td><td>7.000</td><td>6.000</td><td>5000</td><td className="pricing-table__chemical-price">14.000</td></tr>
+                  <tr><td>TP.HCM</td><td className="pricing-table__red">10.000</td><td className="pricing-table__red">2.300.000</td><td>8.000</td><td>7.000</td><td>6000</td><td className="pricing-table__chemical-price">16.000</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </PriceSection>
+        </div>
       </div>
     </main>
+  )
+}
+
+function DestinationPriceTable({ rates, extraHeavy = false }: { rates: string[][]; extraHeavy?: boolean }) {
+  return (
+    <table className={`pricing-table pricing-table--destinations${extraHeavy ? ' pricing-table--extra-heavy' : ''}`}>
+      <thead><tr><th scope="col">Trọng lượng</th><th scope="col">Hà Nội</th><th scope="col">{extraHeavy ? 'TP.HCM' : 'TPHCM'}</th></tr></thead>
+      <tbody>{rates.map(([weight, hanoi, hcm]) => <tr key={weight}><td>{weight}</td>{[hanoi, hcm].map((rate, index) => <td key={index}>{rate === 'Liên hệ' ? <a href="tel:0969857874">Liên hệ</a> : rate}</td>)}</tr>)}</tbody>
+    </table>
   )
 }
 
